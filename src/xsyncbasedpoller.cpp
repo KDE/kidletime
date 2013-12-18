@@ -30,10 +30,12 @@ class XSyncBasedPollerHelper : public QAbstractNativeEventFilter
 {
 public:
     XSyncBasedPollerHelper() : q(0), isActive(false) {}
-    ~XSyncBasedPollerHelper() {
+    ~XSyncBasedPollerHelper()
+    {
         delete q;
     }
-    bool nativeEventFilter(const QByteArray& eventType, void *message, long *result) {
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result)
+    {
         Q_UNUSED(result);
         if (isActive && eventType == "xcb_generic_event_t") {
             q->xcbEvent(reinterpret_cast<xcb_generic_event_t *>(message));
@@ -56,16 +58,16 @@ XSyncBasedPoller *XSyncBasedPoller::instance()
 }
 
 XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
-        : AbstractSystemPoller(parent)
-        , m_display(QX11Info::display())
-        , m_xcb_connection(0)
-        , m_idleCounter(None)
-        , m_resetAlarm(None)
-        , m_available(true)
+    : AbstractSystemPoller(parent)
+    , m_display(QX11Info::display())
+    , m_xcb_connection(0)
+    , m_idleCounter(None)
+    , m_resetAlarm(None)
+    , m_available(true)
 {
     Q_ASSERT(!s_globalXSyncBasedPoller()->q);
     s_globalXSyncBasedPoller()->q = this;
-    
+
     if (Q_UNLIKELY(!m_display)) {
         m_available = false;
         qDebug() << "xcb sync could not find display";
@@ -89,19 +91,17 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 #define xcb_sync_systemcounter_name(sc) (((char *) &(sc)->name_len) + 2)
 
     xcb_sync_list_system_counters_cookie_t cookie = xcb_sync_list_system_counters(m_xcb_connection);
-    xcb_sync_list_system_counters_reply_t* reply = xcb_sync_list_system_counters_reply(m_xcb_connection, cookie, NULL);
+    xcb_sync_list_system_counters_reply_t *reply = xcb_sync_list_system_counters_reply(m_xcb_connection, cookie, NULL);
 
     xcb_sync_systemcounter_iterator_t iter;
-    for (iter = xcb_sync_list_system_counters_counters_iterator(reply) ;
-         iter.rem ; xcb_sync_systemcounter_next(&iter)) {
+    for (iter = xcb_sync_list_system_counters_counters_iterator(reply);
+            iter.rem; xcb_sync_systemcounter_next(&iter)) {
         printf("%d: %.*s\n", iter.data->counter,
                iter.data->name_len, xcb_sync_systemcounter_name(iter.data));
-/* Extra info for debugging: */
+        /* Extra info for debugging: */
         printf("  Actual name: %.*s\n", iter.data->name_len,
-               ( (char *) &iter.data->name_len) + 2);
+               ((char *) &iter.data->name_len) + 2);
     }
-
-
 
     int xcbcounters = xcb_sync_list_system_counters_counters_length(reply);
     xcb_sync_systemcounter_iterator_t it = xcb_sync_list_system_counters_counters_iterator(reply);
@@ -281,7 +281,7 @@ bool XSyncBasedPoller::xcbEvent(xcb_generic_event_t *event)
         return false;
     }
 
-    xcb_sync_alarm_notify_event_t* alarmEvent = reinterpret_cast<xcb_sync_alarm_notify_event_t *>(event);
+    xcb_sync_alarm_notify_event_t *alarmEvent = reinterpret_cast<xcb_sync_alarm_notify_event_t *>(event);
 
     if (alarmEvent->state == XCB_SYNC_ALARMSTATE_DESTROYED) {
         return false;

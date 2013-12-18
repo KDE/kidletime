@@ -41,12 +41,12 @@
 #include <QPointer>
 #include <QSet>
 
-
 class KIdleTimeHelper
 {
 public:
     KIdleTimeHelper() : q(0) {}
-    ~KIdleTimeHelper() {
+    ~KIdleTimeHelper()
+    {
         delete q;
     }
     KIdleTime *q;
@@ -83,8 +83,8 @@ public:
 };
 
 KIdleTime::KIdleTime()
-        : QObject(0)
-        , d_ptr(new KIdleTimePrivate())
+    : QObject(0)
+    , d_ptr(new KIdleTimePrivate())
 {
     Q_ASSERT(!s_globalKIdleTime()->q);
     s_globalKIdleTime()->q = this;
@@ -222,7 +222,7 @@ void KIdleTimePrivate::unloadCurrentSystem()
     if (!poller.isNull()) {
         poller.data()->unloadPoller();
 #if HAVE_XSYNC
-        if (qobject_cast<XSyncBasedPoller*>(poller.data()) == 0) {
+        if (qobject_cast<XSyncBasedPoller *>(poller.data()) == 0) {
 #endif
             poller.data()->deleteLater();
 #if HAVE_XSYNC

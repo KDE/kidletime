@@ -29,8 +29,9 @@ static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePt
     CFURLRef baseURL;
     CFURLRef bundleURL;
 
-    if (bundlePtr == nil)
-        return(-1);
+    if (bundlePtr == nil) {
+        return (-1);
+    }
 
     *bundlePtr = nil;
 
@@ -40,25 +41,29 @@ static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePt
     err = FSFindFolder(kOnAppropriateDisk, kFrameworksFolderType, true, &frameworksFolderRef);
     if (err == noErr) {
         baseURL = CFURLCreateFromFSRef(kCFAllocatorSystemDefault, &frameworksFolderRef);
-        if (baseURL == nil)
+        if (baseURL == nil) {
             err = coreFoundationUnknownErr;
+        }
     }
 
     if (err == noErr) {
         bundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, baseURL, framework, false);
-        if (bundleURL == nil)
+        if (bundleURL == nil) {
             err = coreFoundationUnknownErr;
+        }
     }
 
     if (err == noErr) {
         *bundlePtr = CFBundleCreate(kCFAllocatorSystemDefault, bundleURL);
-        if (*bundlePtr == nil)
+        if (*bundlePtr == nil) {
             err = coreFoundationUnknownErr;
+        }
     }
 
     if (err == noErr) {
-        if (!CFBundleLoadExecutable(*bundlePtr))
+        if (!CFBundleLoadExecutable(*bundlePtr)) {
             err = coreFoundationUnknownErr;
+        }
     }
 
     // Clean up.
@@ -67,16 +72,18 @@ static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePt
         *bundlePtr = nil;
     }
 
-    if (bundleURL != nil)
+    if (bundleURL != nil) {
         CFRelease(bundleURL);
+    }
 
-    if (baseURL != nil)
+    if (baseURL != nil) {
         CFRelease(baseURL);
+    }
 
     return err;
 }
 
-pascal void MacPoller::IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMessage inState, void* inUserData)
+pascal void MacPoller::IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMessage inState, void *inUserData)
 {
     Q_ASSERT(inUserData);
     switch (inState) {
@@ -84,13 +91,13 @@ pascal void MacPoller::IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMess
     case kEventLoopIdleTimerStopped:
         // Get invoked with this constant at the start of the idle period,
         // or whenever user activity cancels the idle.
-        ((MacPoller*)inUserData)->m_secondsIdle = 0;
-        ((MacPoller*)inUserData)->triggerResume();
+        ((MacPoller *)inUserData)->m_secondsIdle = 0;
+        ((MacPoller *)inUserData)->triggerResume();
         break;
     case kEventLoopIdleTimerIdling:
         // Called every time the timer fires (i.e. every second).
-        ((MacPoller*)inUserData)->m_secondsIdle++;
-        ((MacPoller*)inUserData)->poll();
+        ((MacPoller *)inUserData)->m_secondsIdle++;
+        ((MacPoller *)inUserData)->poll();
         break;
     }
 }
@@ -100,14 +107,14 @@ typedef OSStatus(*InstallEventLoopIdleTimerPtr)(EventLoopRef inEventLoop,
         EventTimerInterval   inFireDelay,
         EventTimerInterval   inInterval,
         EventLoopIdleTimerUPP    inTimerProc,
-        void *               inTimerData,
-        EventLoopTimerRef *  outTimer);
+        void                *inTimerData,
+        EventLoopTimerRef   *outTimer);
 
 MacPoller::MacPoller(QObject *parent)
-        : AbstractSystemPoller(parent)
-        , m_timerRef(0)
-        , m_secondsIdle(0)
-        , m_catch(false)
+    : AbstractSystemPoller(parent)
+    , m_timerRef(0)
+    , m_secondsIdle(0)
+    , m_catch(false)
 {
 }
 
@@ -175,7 +182,7 @@ int MacPoller::poll()
     int idle = m_secondsIdle * 1000;
 
     // Check if we reached a timeout..
-    Q_FOREACH(int i, m_timeouts) {
+    Q_FOREACH (int i, m_timeouts) {
         if ((i - idle < 1000 && i > idle) || (idle - i < 1000 && idle > i)) {
             // Bingo!
             emit timeoutReached(i);

@@ -120,9 +120,9 @@ public Q_SLOTS:
 
     /**
      * Catches the next resume from idle event. This means that whenever user activity will be registered, or
-     * \link simulateUserActivity is called, the signal \link resumingFromIdle will be triggered. 
+     * \link simulateUserActivity is called, the signal \link resumingFromIdle will be triggered.
      * <p>
-     * Please note that this method will trigger the signal just for the very first resume event after the call: 
+     * Please note that this method will trigger the signal just for the very first resume event after the call:
      * this means you explicitly have to request to track every single resume event you are interested in.
      *
      * @note This behavior is due to the fact that a resume event happens whenever the user sends an input to the
@@ -185,7 +185,7 @@ Q_SIGNALS:
 private:
     KIdleTime();
 
-    KIdleTimePrivate * const d_ptr;
+    KIdleTimePrivate *const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void _k_resumingFromIdle())
     Q_PRIVATE_SLOT(d_func(), void _k_timeoutReached(int))

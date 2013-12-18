@@ -44,7 +44,7 @@ private Q_SLOTS:
     void checkForIdle();
 
 private:
-    QTimer * m_idleTimer;
+    QTimer *m_idleTimer;
 };
 
 #endif /* WINDOWSPOLLER_H */

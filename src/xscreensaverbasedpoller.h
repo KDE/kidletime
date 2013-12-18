@@ -42,7 +42,7 @@ private Q_SLOTS:
     int getIdleTime();
 
 private:
-    OrgFreedesktopScreenSaverInterface * m_screenSaverIface;
+    OrgFreedesktopScreenSaverInterface *m_screenSaverIface;
 };
 
 #endif /* XSCREENSAVERBASEDPOLLER_H_ */

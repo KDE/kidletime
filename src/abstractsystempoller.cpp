@@ -19,7 +19,7 @@
 #include "abstractsystempoller.h"
 
 AbstractSystemPoller::AbstractSystemPoller(QObject *parent)
-        : QObject(parent)
+    : QObject(parent)
 {
 }
 

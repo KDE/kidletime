@@ -24,7 +24,7 @@
 #include <QTimer>
 
 WindowsPoller::WindowsPoller(QObject *parent)
-        : WidgetBasedPoller(parent)
+    : WidgetBasedPoller(parent)
 {
 }
 

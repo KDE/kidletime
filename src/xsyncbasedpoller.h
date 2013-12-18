@@ -64,7 +64,7 @@ private:
                   XSyncTestType test, XSyncValue value);
 
 private:
-    Display * m_display;
+    Display *m_display;
     xcb_connection_t *m_xcb_connection;
 
     int                 m_sync_event;
@@ -75,5 +75,4 @@ private:
 };
 
 #endif /* XSYNCBASEDPOLLER_H */
-
 

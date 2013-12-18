@@ -35,7 +35,7 @@ public:
     bool setUpPoller();
     void unloadPoller();
 
-    static pascal void IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMessage inState, void* inUserData);
+    static pascal void IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMessage inState, void *inUserData);
 
 public Q_SLOTS:
     void addTimeout(int nextTimeout);
