@@ -37,6 +37,8 @@ endif ()
 add_library(KF5IdleTime ${kidletime_LIB_SRCS})
 generate_export_header(KF5IdleTime BASE_NAME KIdleTime)
 add_library(KF5::IdleTime ALIAS KF5IdleTime)
+target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kidletime>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KIdleTime>")
+
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
 target_link_libraries(KF5IdleTime PRIVATE Qt5::Widgets ${kidletime_LIBS})
 
@@ -44,8 +46,20 @@ set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING
                                               SOVERSION ${KIDLETIME_SOVERSION}
                                               EXPORT_NAME IdleTime
 )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
-               kidletime.h
-         DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+
+ecm_generate_headers(
+  KIdleTime
+
+  MODULE_NAME KIdleTime
+  REQUIRED_HEADERS KIdleTime_HEADERS
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KIdleTime DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
+  ${KIdleTime_HEADERS}
+  DESTINATION ${INCLUDE_INSTALL_DIR}/kidletime COMPONENT Devel
+)
 
 install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
