@@ -1,10 +1,7 @@
 ######## kidletime ####################
 
-if (X11_XSync_FOUND AND XCB_XCB_FOUND AND X11_XCB_FOUND AND XCB_SYNC_FOUND)
-   set (HAVE_XSYNC 1)
+if (HAVE_XSYNC)
    include_directories( ${XCB_XCB_INCLUDE_DIR} ${XCB_SYNC_INCLUDE_DIR})
-else ()
-   set (HAVE_XSYNC 0)
 endif ()
 
 configure_file(config-kidletime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kidletime.h )

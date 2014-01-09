@@ -35,19 +35,29 @@ if (APPLE)
 endif ()
 
 find_package(X11)
-find_package(XCB COMPONENTS XCB SYNC)
-find_package(X11_XCB)
-
-set(HAVE_X11 ${X11_FOUND})
+find_package(XCB COMPONENTS XCB)
 if(X11_FOUND)
-    add_feature_info("X Screensaver Extension (libXss)" X11_Xscreensaver_FOUND "Support for KIdleTime (fallback mode)")
-    add_feature_info("X Sync Extension (libXext)" X11_XSync_FOUND "Efficient operation of KIdleTime. STRONGLY RECOMMENDED")
-
-    if(NOT X11_XSync_FOUND AND NOT X11_Xscreensaver_FOUND)
-        message(FATAL_ERROR "\nNeither the XSync (libXext) nor XScreensaver (libXss) development package was found.\nPlease install one of them (XSync is recommended)\n")
+    find_package(XCB COMPONENTS XCB SYNC)
+    find_package(X11_XCB)
+    if (X11_XSync_FOUND AND XCB_XCB_FOUND AND X11_XCB_FOUND AND XCB_SYNC_FOUND)
+        # One cannot just use "set(HAVE_XSYNC X11_XSync_FOUND AND XCB_XCB_FOUND...)"
+        # Doing so would create a list because the value passed to set() is not evaluated.
+        set(HAVE_XSYNC TRUE)
+    else()
+        set(HAVE_XSYNC FALSE)
     endif()
+    add_feature_info("libXext" X11_XSync_FOUND "required for X-Sync based poller")
+    add_feature_info("libX11-xcb" X11_XCB_FOUND "required for X-Sync based poller")
+    add_feature_info("libxcb" XCB_XCB_FOUND "required for X-Sync based poller")
+    add_feature_info("libxcb-sync" XCB_SYNC_FOUND "required for X-Sync based poller")
+    add_feature_info("X-Sync based poller" HAVE_XSYNC "efficient operation of KIdleTime. STRONGLY RECOMMENDED (requires libXext, libX11-xcb, libxcb and libxcb-sync)")
 
     set(HAVE_XSCREENSAVER ${X11_Xscreensaver_FOUND})
+    add_feature_info("X-Screensaver based poller" HAVE_XSCREENSAVER "KIdleTime fallback mode (libXss)")
+
+    if(NOT HAVE_XSCREENSAVER AND NOT HAVE_XSYNC)
+        message(FATAL_ERROR "\nNeither the XSync (libXext) nor XScreensaver (libXss) development package was found.\nPlease install one of them (XSync is recommended)")
+    endif()
 endif()
 
 # Subdirectories
