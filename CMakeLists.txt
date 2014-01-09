@@ -48,7 +48,6 @@ if(X11_FOUND)
     endif()
 
     set(HAVE_XSCREENSAVER ${X11_Xscreensaver_FOUND})
-    set(HAVE_XTEST ${X11_XTest_FOUND})
 endif()
 
 # Subdirectories
