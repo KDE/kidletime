@@ -60,3 +60,7 @@ install(FILES
 )
 
 install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+include(ECMGeneratePriFile)
+ecm_generate_pri_file(BASE_NAME KIdleTime LIB_NAME KF5IdleTime DEPS "core" FILENAME_VAR PRI_FILENAME)
+install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
