@@ -44,14 +44,13 @@ set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING
                                               EXPORT_NAME IdleTime
 )
 
-ecm_generate_headers(
+ecm_generate_headers(KIdleTime_HEADERS
+  HEADER_NAMES
   KIdleTime
 
-  MODULE_NAME KIdleTime
   REQUIRED_HEADERS KIdleTime_HEADERS
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KIdleTime DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
