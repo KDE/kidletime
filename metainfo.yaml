@@ -1,1 +1,11 @@
+maintainer:
+description: Monitoring user activity
 tier: 1
+type: functional
+platforms:
+    - name: Linux
+    - name: Windows
+    - name: MacOSX
+portingAid: false
+deprecated: false
+release: true
