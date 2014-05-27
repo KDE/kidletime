@@ -114,10 +114,10 @@ int WidgetBasedPoller::poll()
     int idle = getIdleTime();
 
     // Check if we reached a timeout..
-    Q_FOREACH (int i, m_timeouts) {
-        if ((i - idle < 300 && i > idle) || (idle - i < 300 && idle > i)) {
+    Q_FOREACH(int timeOut, m_timeouts) {
+        if ( ( timeOut - idle < 300 && timeOut >= idle ) || ( idle - timeOut < 300 && idle > timeOut ) ) {
             // Bingo!
-            emit timeoutReached(i);
+            emit timeoutReached( timeOut );
         }
     }
 
