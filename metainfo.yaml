@@ -9,3 +9,7 @@ platforms:
 portingAid: false
 deprecated: false
 release: true
+libraries:
+ - qmake: KIdleTime
+   cmake: "KF5::IdleTime"
+cmakename: KF5IdleTime
