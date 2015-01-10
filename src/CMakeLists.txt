@@ -35,7 +35,7 @@ endif ()
 add_library(KF5IdleTime ${kidletime_LIB_SRCS})
 generate_export_header(KF5IdleTime BASE_NAME KIdleTime)
 add_library(KF5::IdleTime ALIAS KF5IdleTime)
-target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIdleTime>")
+target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
 
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
 target_link_libraries(KF5IdleTime PRIVATE Qt5::Widgets ${kidletime_LIBS})
@@ -56,11 +56,11 @@ ecm_generate_headers(KIdleTime_HEADERS
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
   ${KIdleTime_HEADERS}
-  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIdleTime COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime COMPONENT Devel
 )
 
 install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KIdleTime LIB_NAME KF5IdleTime DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/KIdleTime)
+ecm_generate_pri_file(BASE_NAME KIdleTime LIB_NAME KF5IdleTime DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
