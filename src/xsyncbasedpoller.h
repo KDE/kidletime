@@ -38,22 +38,22 @@ public:
 
     virtual ~XSyncBasedPoller();
 
-    bool isAvailable();
-    bool setUpPoller();
-    void unloadPoller();
+    bool isAvailable() Q_DECL_OVERRIDE;
+    bool setUpPoller() Q_DECL_OVERRIDE;
+    void unloadPoller() Q_DECL_OVERRIDE;
 
     bool xcbEvent(xcb_generic_event_t *event);
 protected:
     XSyncBasedPoller(QObject *parent = 0);
 
 public Q_SLOTS:
-    void addTimeout(int nextTimeout);
-    void removeTimeout(int nextTimeout);
-    QList<int> timeouts() const;
-    int forcePollRequest();
-    void catchIdleEvent();
-    void stopCatchingIdleEvents();
-    void simulateUserActivity();
+    void addTimeout(int nextTimeout) Q_DECL_OVERRIDE;
+    void removeTimeout(int nextTimeout) Q_DECL_OVERRIDE;
+    QList<int> timeouts() const Q_DECL_OVERRIDE;
+    int forcePollRequest() Q_DECL_OVERRIDE;
+    void catchIdleEvent() Q_DECL_OVERRIDE;
+    void stopCatchingIdleEvents() Q_DECL_OVERRIDE;
+    void simulateUserActivity() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     int poll();

@@ -34,7 +34,7 @@ public:
     {
         delete q;
     }
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result)
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) Q_DECL_OVERRIDE
     {
         Q_UNUSED(result);
         if (isActive && eventType == "xcb_generic_event_t") {
