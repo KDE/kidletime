@@ -191,7 +191,7 @@ void KIdleTimePrivate::loadSystem()
 #if HAVE_XSYNC
 #if HAVE_XSCREENSAVER
     if (QX11Info::isPlatformX11()) {
-      if (XSyncBasedPoller::instance()->isAvailable()) {
+        if (XSyncBasedPoller::instance()->isAvailable()) {
             poller = XSyncBasedPoller::instance();
         } else {
             poller = new XScreensaverBasedPoller();
@@ -199,13 +199,13 @@ void KIdleTimePrivate::loadSystem()
     }
 #else
     if (QX11Info::isPlatformX11()) {
-      poller = XSyncBasedPoller::instance();
+        poller = XSyncBasedPoller::instance();
     }
 #endif
 #else
 #if HAVE_XSCREENSAVER
     if (QX11Info::isPlatformX11()) {
-      poller = new XScreensaverBasedPoller();
+        poller = new XScreensaverBasedPoller();
     }
 #endif
 #endif
