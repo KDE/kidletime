@@ -40,6 +40,9 @@
 
 #include <QPointer>
 #include <QSet>
+#if HAVE_X11
+#include <QX11Info>
+#endif
 
 class KIdleTimeHelper
 {
@@ -187,17 +190,23 @@ void KIdleTimePrivate::loadSystem()
 
 #if HAVE_XSYNC
 #if HAVE_XSCREENSAVER
-    if (XSyncBasedPoller::instance()->isAvailable()) {
-        poller = XSyncBasedPoller::instance();
-    } else {
-        poller = new XScreensaverBasedPoller();
+    if (QX11Info::isPlatformX11()) {
+      if (XSyncBasedPoller::instance()->isAvailable()) {
+            poller = XSyncBasedPoller::instance();
+        } else {
+            poller = new XScreensaverBasedPoller();
+        }
     }
 #else
-    poller = XSyncBasedPoller::instance();
+    if (QX11Info::isPlatformX11()) {
+      poller = XSyncBasedPoller::instance();
+    }
 #endif
 #else
 #if HAVE_XSCREENSAVER
-    poller = new XScreensaverBasedPoller();
+    if (QX11Info::isPlatformX11()) {
+      poller = new XScreensaverBasedPoller();
+    }
 #endif
 #endif
 
@@ -209,7 +218,7 @@ void KIdleTimePrivate::loadSystem()
     poller = new WindowsPoller();
 #endif
 
-    if (!poller->isAvailable()) {
+    if (poller && !poller->isAvailable()) {
         poller = 0;
     }
     if (!poller.isNull()) {

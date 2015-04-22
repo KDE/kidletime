@@ -44,6 +44,7 @@ endif()
 if(X11_FOUND)
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
+    set(HAVE_X11 TRUE)
     if (X11_XSync_FOUND AND XCB_XCB_FOUND AND X11_XCB_FOUND AND XCB_SYNC_FOUND)
         # One cannot just use "set(HAVE_XSYNC X11_XSync_FOUND AND XCB_XCB_FOUND...)"
         # Doing so would create a list because the value passed to set() is not evaluated.
@@ -63,6 +64,8 @@ if(X11_FOUND)
     if(NOT HAVE_XSCREENSAVER AND NOT HAVE_XSYNC)
         message(FATAL_ERROR "\nNeither the XSync (libXext) nor XScreensaver (libXss) development package was found.\nPlease install one of them (XSync is recommended)")
     endif()
+else()
+    set(HAVE_X11 FALSE)
 endif()
 
 # Subdirectories
