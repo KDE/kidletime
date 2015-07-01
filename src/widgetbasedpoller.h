@@ -19,12 +19,14 @@
 #ifndef WIDGETBASEDPOLLER_H
 #define WIDGETBASEDPOLLER_H
 
+#include <kidletime_export.h>
+
 #include "abstractsystempoller.h"
 
 class QTimer;
 class QEvent;
 
-class WidgetBasedPoller : public AbstractSystemPoller
+class KIDLETIME_EXPORT WidgetBasedPoller : public AbstractSystemPoller
 {
     Q_OBJECT
 

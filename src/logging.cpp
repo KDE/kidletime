@@ -1,5 +1,5 @@
 /* This file is part of the KDE libraries
-   Copyright (C) 2009 Dario Freddi <drf at kde.org>
+   Copyright (C) 2015 Martin Gräßlin <mgraesslin@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -15,36 +15,5 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-
-#ifndef WINDOWSPOLLER_H
-#define WINDOWSPOLLER_H
-
-#include "widgetbasedpoller.h"
-
-class QTimer;
-
-class WindowsPoller : public WidgetBasedPoller
-{
-    Q_OBJECT
-
-public:
-    WindowsPoller(QObject *parent = 0);
-    virtual ~WindowsPoller();
-
-public Q_SLOTS:
-    void simulateUserActivity();
-    void catchIdleEvent();
-    void stopCatchingIdleEvents();
-
-private:
-    bool additionalSetUp();
-
-private Q_SLOTS:
-    int getIdleTime();
-    void checkForIdle();
-
-private:
-    QTimer *m_idleTimer;
-};
-
-#endif /* WINDOWSPOLLER_H */
+#include "logging.h"
+Q_LOGGING_CATEGORY(KIDLETIME, "org.kde.kf5.idletime")

@@ -19,9 +19,11 @@
 #ifndef ABSTRACTSYSTEMPOLLER_H
 #define ABSTRACTSYSTEMPOLLER_H
 
+#include <kidletime_export.h>
+
 #include <QObject>
 
-class AbstractSystemPoller : public QObject
+class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
 {
     Q_OBJECT
 
@@ -48,5 +50,7 @@ Q_SIGNALS:
     void timeoutReached(int msec);
 
 };
+
+Q_DECLARE_INTERFACE(AbstractSystemPoller, "org.kde.kidletime.AbstractSystemPoller")
 
 #endif /* ABSTRACTSYSTEMPOLLER_H */

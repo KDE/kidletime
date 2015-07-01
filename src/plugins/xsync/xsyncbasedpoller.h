@@ -28,14 +28,18 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/sync.h>
 #include <xcb/xcb.h>
+#include "fixx11h.h"
 
 class XSyncBasedPoller : public AbstractSystemPoller
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "xcb.json")
+    Q_INTERFACES(AbstractSystemPoller)
 
 public:
     static XSyncBasedPoller *instance();
 
+    XSyncBasedPoller(QObject *parent = 0);
     virtual ~XSyncBasedPoller();
 
     bool isAvailable() Q_DECL_OVERRIDE;
@@ -43,8 +47,6 @@ public:
     void unloadPoller() Q_DECL_OVERRIDE;
 
     bool xcbEvent(xcb_generic_event_t *event);
-protected:
-    XSyncBasedPoller(QObject *parent = 0);
 
 public Q_SLOTS:
     void addTimeout(int nextTimeout) Q_DECL_OVERRIDE;

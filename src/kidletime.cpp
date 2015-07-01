@@ -21,28 +21,14 @@
 #include <config-kidletime.h>
 
 #include "abstractsystempoller.h"
+#include "logging.h"
 
-#if HAVE_XSCREENSAVER
-#include "xscreensaverbasedpoller.h"
-#endif
-
-#if HAVE_XSYNC
-#include "xsyncbasedpoller.h"
-#endif
-
-#ifdef Q_OS_MAC
-#include "macpoller.h"
-#endif
-
-#ifdef Q_OS_WIN
-#include "windowspoller.h"
-#endif
-
+#include <QDir>
+#include <QJsonArray>
+#include <QGuiApplication>
+#include <QPluginLoader>
 #include <QPointer>
 #include <QSet>
-#if HAVE_X11
-#include <QX11Info>
-#endif
 
 class KIdleTimeHelper
 {
@@ -180,43 +166,55 @@ void KIdleTime::removeAllIdleTimeouts()
     }
 }
 
+static QStringList pluginCandidates()
+{
+    QStringList ret;
+    foreach (const QString &path, QCoreApplication::libraryPaths()) {
+        QDir pluginDir(path + QLatin1String("/kf5/org.kde.kidletime.platforms"));
+        if (!pluginDir.exists()) {
+            continue;
+        }
+        foreach (const QString &entry, pluginDir.entryList(QDir::Files | QDir::NoDotAndDotDot)) {
+            ret << pluginDir.absoluteFilePath(entry);
+        }
+    }
+    return ret;
+}
+
+static AbstractSystemPoller *loadPoller()
+{
+    foreach (const QString &candidate, pluginCandidates()) {
+        if (!QLibrary::isLibrary(candidate)) {
+            continue;
+        }
+        QPluginLoader loader(candidate);
+        QJsonObject metaData = loader.metaData();
+        const QJsonArray platforms = metaData.value(QStringLiteral("MetaData")).toObject().value(QStringLiteral("platforms")).toArray();
+        for (auto it = platforms.begin(); it != platforms.end(); ++it) {
+            if (QString::compare(QGuiApplication::platformName(), it->toString(), Qt::CaseInsensitive) == 0) {
+                AbstractSystemPoller *poller = qobject_cast< AbstractSystemPoller* >(loader.instance());
+                if (poller) {
+                    qCDebug(KIDLETIME) << "Trying plugin" << candidate;
+                    if (poller->isAvailable()) {
+                        qCDebug(KIDLETIME) << "Using" << candidate << "for platform" << QGuiApplication::platformName();
+                        return poller;
+                    }
+                    delete poller;
+                }
+            }
+        }
+    }
+    return Q_NULLPTR;
+}
+
 void KIdleTimePrivate::loadSystem()
 {
     if (!poller.isNull()) {
         unloadCurrentSystem();
     }
 
-    // Priority order
-
-#if HAVE_XSYNC
-#if HAVE_XSCREENSAVER
-    if (QX11Info::isPlatformX11()) {
-        if (XSyncBasedPoller::instance()->isAvailable()) {
-            poller = XSyncBasedPoller::instance();
-        } else {
-            poller = new XScreensaverBasedPoller();
-        }
-    }
-#else
-    if (QX11Info::isPlatformX11()) {
-        poller = XSyncBasedPoller::instance();
-    }
-#endif
-#else
-#if HAVE_XSCREENSAVER
-    if (QX11Info::isPlatformX11()) {
-        poller = new XScreensaverBasedPoller();
-    }
-#endif
-#endif
-
-#ifdef Q_OS_MAC
-    poller = new MacPoller();
-#endif
-
-#ifdef Q_OS_WIN
-    poller = new WindowsPoller();
-#endif
+    // load plugin
+    poller = loadPoller();
 
     if (poller && !poller->isAvailable()) {
         poller = 0;
@@ -230,13 +228,7 @@ void KIdleTimePrivate::unloadCurrentSystem()
 {
     if (!poller.isNull()) {
         poller.data()->unloadPoller();
-#if HAVE_XSYNC
-        if (qobject_cast<XSyncBasedPoller *>(poller.data()) == 0) {
-#endif
-            poller.data()->deleteLater();
-#if HAVE_XSYNC
-        }
-#endif
+        poller.data()->deleteLater();
     }
 }
 

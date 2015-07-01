@@ -1,0 +1,16 @@
+if(APPLE)
+    add_subdirectory(osx)
+endif()
+
+if(WIN32)
+    add_subdirectory(windows)
+endif()
+
+if(X11_FOUND)
+    if(HAVE_XSCREENSAVER)
+        add_subdirectory(xscreensaver)
+    endif()
+    if(HAVE_XSYNC)
+        add_subdirectory(xsync)
+    endif()
+endif()
