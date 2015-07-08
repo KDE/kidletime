@@ -40,6 +40,15 @@ install(FILES
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime COMPONENT Devel
 )
 
+install(
+    FILES
+        abstractsystempoller.h
+    DESTINATION
+        ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime/private
+    COMPONENT
+        Devel
+)
+
 install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 include(ECMGeneratePriFile)
