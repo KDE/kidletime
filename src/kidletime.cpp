@@ -191,7 +191,7 @@ static AbstractSystemPoller *loadPoller()
         QJsonObject metaData = loader.metaData();
         const QJsonArray platforms = metaData.value(QStringLiteral("MetaData")).toObject().value(QStringLiteral("platforms")).toArray();
         for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-            if (QString::compare(QGuiApplication::platformName(), it->toString(), Qt::CaseInsensitive) == 0) {
+            if (QString::compare(QGuiApplication::platformName(), (*it).toString(), Qt::CaseInsensitive) == 0) {
                 AbstractSystemPoller *poller = qobject_cast< AbstractSystemPoller* >(loader.instance());
                 if (poller) {
                     qCDebug(KIDLETIME) << "Trying plugin" << candidate;
