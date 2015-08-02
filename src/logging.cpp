@@ -16,4 +16,10 @@
    Boston, MA 02110-1301, USA.
 */
 #include "logging.h"
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+// logging category for this framework, default: log stuff >= warning
+Q_LOGGING_CATEGORY(KIDLETIME, "org.kde.kf5.idletime", QtWarningMsg)
+#else
 Q_LOGGING_CATEGORY(KIDLETIME, "org.kde.kf5.idletime")
+#endif
