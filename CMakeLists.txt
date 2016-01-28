@@ -26,7 +26,7 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KIDLETIME
 
 # Dependencies
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 set(REQUIRED_QT_VERSION 5.3.0)
