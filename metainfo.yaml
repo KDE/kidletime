@@ -13,3 +13,7 @@ libraries:
  - qmake: KIdleTime
    cmake: "KF5::IdleTime"
 cmakename: KF5IdleTime
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 1
