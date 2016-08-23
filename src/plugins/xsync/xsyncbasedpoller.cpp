@@ -339,5 +339,6 @@ void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter co
 void XSyncBasedPoller::simulateUserActivity()
 {
     XResetScreenSaver(m_display);
+    XFlush(m_display);
 }
 
