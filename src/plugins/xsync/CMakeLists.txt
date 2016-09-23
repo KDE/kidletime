@@ -2,6 +2,7 @@ include_directories( ${XCB_XCB_INCLUDE_DIR} ${XCB_SYNC_INCLUDE_DIR})
 
 set(xsync_plugin_SRCS
     xsyncbasedpoller.cpp
+    ../../logging.cpp
 )
 
 add_library(KF5IdleTimeXcbPlugin0 MODULE ${xsync_plugin_SRCS})

@@ -19,6 +19,8 @@
 // Exceptionnally, include QCoreApplication before our own header, because that one includes X11 headers (#define None...)
 #include <QCoreApplication>
 
+#include "../../logging.h"
+
 #include "xsyncbasedpoller.h"
 
 #include <QAbstractNativeEventFilter>
@@ -70,7 +72,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     if (Q_UNLIKELY(!m_display)) {
         m_available = false;
-        qDebug() << "xcb sync could not find display";
+        qCWarning(KIDLETIME) << "xcb sync could not find display";
         return;
     }
     m_xcb_connection = XGetXCBConnection(m_display);
@@ -79,7 +81,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     const xcb_query_extension_reply_t *sync_reply = xcb_get_extension_data(m_xcb_connection, &xcb_sync_id);
     if (!sync_reply || !sync_reply->present) {
-        qDebug() << "xcb sync extension not found";
+        qCWarning(KIDLETIME) << "xcb sync extension not found";
         m_available = false;
         return;
     }
@@ -106,10 +108,10 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     int xcbcounters = xcb_sync_list_system_counters_counters_length(reply);
     xcb_sync_systemcounter_iterator_t it = xcb_sync_list_system_counters_counters_iterator(reply);
     for (int i = 0; i < xcbcounters; ++i) {
-        qDebug() << it.data->counter << it.rem << it.index;
-        qDebug() << "name length" << xcb_sync_systemcounter_name_length(it.data);
+        qCDebug(KIDLETIME) << it.data->counter << it.rem << it.index;
+        qCDebug(KIDLETIME) << "name length" << xcb_sync_systemcounter_name_length(it.data);
         QByteArray name(xcb_sync_systemcounter_name(it.data), xcb_sync_systemcounter_name_length(it.data));
-        qDebug() << name;
+        qCDebug(KIDLETIME) << name;
         xcb_sync_systemcounter_next(&it);
     }
     delete reply;
@@ -132,9 +134,9 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     bool idleFound = false;
 
-    //qDebug() << ncounters << "counters";
+    qCDebug(KIDLETIME) << ncounters << "counters";
     for (int i = 0; i < ncounters; ++i) {
-        //qDebug() << counters[i].name << counters[i].counter;
+        qCDebug(KIDLETIME) << counters[i].name << counters[i].counter;
         if (!strcmp(counters[i].name, "IDLETIME")) {
             m_idleCounter = counters[i].counter;
             idleFound = true;
@@ -149,9 +151,9 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     }
 
     if (m_available) {
-        qDebug() << "XSync seems available and ready";
+        qCDebug(KIDLETIME) << "XSync seems available and ready";
     } else {
-        qDebug() << "XSync seems not available";
+        qCDebug(KIDLETIME) << "XSync seems not available";
     }
 }
 
@@ -170,11 +172,11 @@ bool XSyncBasedPoller::setUpPoller()
         return false;
     }
 
-    qDebug() << "XSync Inited";
+    qCDebug(KIDLETIME) << "XSync Inited";
 
     s_globalXSyncBasedPoller()->isActive = true;
 
-    qDebug() << "Supported, init completed";
+    qCDebug(KIDLETIME) << "Supported, init completed";
 
     return true;
 }
@@ -276,7 +278,7 @@ void XSyncBasedPoller::reloadAlarms()
 
 bool XSyncBasedPoller::xcbEvent(xcb_generic_event_t *event)
 {
-    //qDebug() << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
+    qCDebug(KIDLETIME) << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
     if (event->response_type != m_sync_event + XCB_SYNC_ALARM_NOTIFY) {
         return false;
     }
@@ -330,7 +332,7 @@ void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter co
         XSyncChangeAlarm(dpy, *alarm, flags, &attr);
     } else {
         *alarm = XSyncCreateAlarm(dpy, flags, &attr);
-        qDebug() << "Created alarm" << *alarm;
+        qCDebug(KIDLETIME) << "Created alarm" << *alarm;
     }
 
     XFlush(m_display);
