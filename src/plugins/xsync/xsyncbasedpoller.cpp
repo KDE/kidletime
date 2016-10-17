@@ -278,7 +278,7 @@ void XSyncBasedPoller::reloadAlarms()
 
 bool XSyncBasedPoller::xcbEvent(xcb_generic_event_t *event)
 {
-    qCDebug(KIDLETIME) << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
+    // qCDebug(KIDLETIME) << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
     if (event->response_type != m_sync_event + XCB_SYNC_ALARM_NOTIFY) {
         return false;
     }
