@@ -39,7 +39,7 @@ class XSyncBasedPoller : public AbstractSystemPoller
 public:
     static XSyncBasedPoller *instance();
 
-    XSyncBasedPoller(QObject *parent = 0);
+    XSyncBasedPoller(QObject *parent = nullptr);
     virtual ~XSyncBasedPoller();
 
     bool isAvailable() Q_DECL_OVERRIDE;

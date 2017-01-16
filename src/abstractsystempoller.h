@@ -29,7 +29,7 @@ class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
 
 public:
 
-    AbstractSystemPoller(QObject *parent = 0);
+    AbstractSystemPoller(QObject *parent = nullptr);
     virtual ~AbstractSystemPoller();
 
     virtual bool isAvailable() = 0;

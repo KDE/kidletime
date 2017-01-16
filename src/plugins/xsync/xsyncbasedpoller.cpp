@@ -31,7 +31,7 @@
 class XSyncBasedPollerHelper : public QAbstractNativeEventFilter
 {
 public:
-    XSyncBasedPollerHelper() : q(0), isActive(false) {}
+    XSyncBasedPollerHelper() : q(nullptr), isActive(false) {}
     ~XSyncBasedPollerHelper()
     {
         delete q;
@@ -62,7 +62,7 @@ XSyncBasedPoller *XSyncBasedPoller::instance()
 XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     : AbstractSystemPoller(parent)
     , m_display(QX11Info::display())
-    , m_xcb_connection(0)
+    , m_xcb_connection(nullptr)
     , m_idleCounter(None)
     , m_resetAlarm(None)
     , m_available(true)

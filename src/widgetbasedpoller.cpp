@@ -44,7 +44,7 @@ bool WidgetBasedPoller::setUpPoller()
     connect(m_pollTimer, SIGNAL(timeout()), this, SLOT(poll()));
 
     // This code was taken from Lithium/KDE4Powersave
-    m_grabber = new QWidget(0, Qt::X11BypassWindowManagerHint);
+    m_grabber = new QWidget(nullptr, Qt::X11BypassWindowManagerHint);
     m_grabber->move(-1000, -1000);
     m_grabber->setMouseTracking(true);
     m_grabber->installEventFilter(this);

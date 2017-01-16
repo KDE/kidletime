@@ -33,7 +33,7 @@
 class KIdleTimeHelper
 {
 public:
-    KIdleTimeHelper() : q(0) {}
+    KIdleTimeHelper() : q(nullptr) {}
     ~KIdleTimeHelper()
     {
         delete q;
@@ -72,7 +72,7 @@ public:
 };
 
 KIdleTime::KIdleTime()
-    : QObject(0)
+    : QObject(nullptr)
     , d_ptr(new KIdleTimePrivate())
 {
     Q_ASSERT(!s_globalKIdleTime()->q);
@@ -217,7 +217,7 @@ void KIdleTimePrivate::loadSystem()
     poller = loadPoller();
 
     if (poller && !poller->isAvailable()) {
-        poller = 0;
+        poller = nullptr;
     }
     if (!poller.isNull()) {
         poller.data()->setUpPoller();

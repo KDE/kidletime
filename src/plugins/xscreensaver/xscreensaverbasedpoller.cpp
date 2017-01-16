@@ -26,7 +26,7 @@
 #include <X11/extensions/scrnsaver.h>
 
 XScreensaverBasedPoller::XScreensaverBasedPoller(QObject *parent)
-    : WidgetBasedPoller(parent), m_screenSaverIface(0)
+    : WidgetBasedPoller(parent), m_screenSaverIface(nullptr)
 {
 
 }
@@ -58,7 +58,7 @@ void XScreensaverBasedPoller::screensaverActivated(bool activated)
 
 int XScreensaverBasedPoller::getIdleTime()
 {
-    XScreenSaverInfo *mitInfo = 0;
+    XScreenSaverInfo *mitInfo = nullptr;
     mitInfo = XScreenSaverAllocInfo();
     XScreenSaverQueryInfo(QX11Info::display(), DefaultRootWindow(QX11Info::display()), mitInfo);
     int ret = mitInfo->idle;
