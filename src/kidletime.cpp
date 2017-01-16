@@ -204,7 +204,7 @@ static AbstractSystemPoller *loadPoller()
             }
         }
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void KIdleTimePrivate::loadSystem()
