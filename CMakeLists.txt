@@ -17,6 +17,7 @@ include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMAddQch)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h"
@@ -71,12 +72,25 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 
+option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
+add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
+
 # Subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5IdleTime")
+
+if (BUILD_QCH)
+    ecm_install_qch_export(
+        TARGETS KF5IdleTime_QCH
+        FILE KF5IdleTimeQchTargets.cmake
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+    )
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5IdleTimeQchTargets.cmake\")")
+endif()
 
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5IdleTimeConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfig.cmake"
