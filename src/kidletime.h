@@ -76,7 +76,7 @@ public:
 
     /**
      * Attempts to simulate user activity. This implies that after calling this
-     * method, the idle time of the system will become 0 and eventually \link resumingFromIdle
+     * method, the idle time of the system will become 0 and eventually \link resumingFromIdle \endlink
      * will be triggered
      *
      * @see resumingFromIdle
@@ -113,7 +113,7 @@ public Q_SLOTS:
 
     /**
      * Stops catching every set timeout (if any). This means that after calling this method, the signal
-     * \link timeoutReached won't be called again until you will add another timeout
+     * \link timeoutReached \endlink won't be called again until you will add another timeout
      *
      * @see timeoutReached
      * @see addIdleTimeout
@@ -122,7 +122,7 @@ public Q_SLOTS:
 
     /**
      * Catches the next resume from idle event. This means that whenever user activity will be registered, or
-     * \link simulateUserActivity is called, the signal \link resumingFromIdle will be triggered.
+     * \link simulateUserActivity \endlink is called, the signal \link resumingFromIdle \endlink will be triggered.
      * <p>
      * Please note that this method will trigger the signal just for the very first resume event after the call:
      * this means you explicitly have to request to track every single resume event you are interested in.
@@ -153,7 +153,7 @@ public Q_SLOTS:
 Q_SIGNALS:
     /**
      * Triggered, if KIdleTime is catching resume events, when the system resumes from an idle state. This means
-     * that either \link simulateUserActivity was called or the user sent an input to the system.
+     * that either \link simulateUserActivity \endlink was called or the user sent an input to the system.
      *
      * @see catchNextResumeEvent
      */
@@ -163,7 +163,7 @@ Q_SIGNALS:
      * Triggered when the system has been idle for x milliseconds, identified by the previously set
      * timeout.
      * <p>
-     * This signal is triggered whenever each timeout previously registered with \link addIdleTimeout
+     * This signal is triggered whenever each timeout previously registered with \link addIdleTimeout \endlink
      * is reached.
      *
      * @param identifier the identifier of the timeout the system has reached
@@ -175,7 +175,7 @@ Q_SIGNALS:
 
     /**
      * Overload. Streams the duration as well. It is guaranteed that \c msec will exactly
-     * correspond to the timeout registered with \link addIdleTimeout
+     * correspond to the timeout registered with \link addIdleTimeout \endlink
      *
      * @param msec the time, in milliseconds, the system has been idle for
      *
