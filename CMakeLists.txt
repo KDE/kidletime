@@ -32,10 +32,6 @@ include(KDECMakeSettings)
 set(REQUIRED_QT_VERSION 5.7.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets)
 
-if(NOT WIN32 AND NOT APPLE)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
-endif()
-
 if(APPLE)
     cmake_find_frameworks(CoreFoundation Carbon)
 endif()
@@ -65,6 +61,10 @@ if(X11_FOUND)
 
     set(HAVE_XSCREENSAVER ${X11_Xscreensaver_FOUND})
     add_feature_info("X-Screensaver based poller" HAVE_XSCREENSAVER "KIdleTime fallback mode (libXss)")
+
+    if(HAVE_XSCREENSAVER AND NOT WIN32)
+        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+    endif()
 
     if(NOT HAVE_XSCREENSAVER AND NOT HAVE_XSYNC)
         message(FATAL_ERROR "\nNeither the XSync (libXext) nor XScreensaver (libXss) development package was found.\nPlease install one of them (XSync is recommended)")
