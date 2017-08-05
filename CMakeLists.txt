@@ -33,7 +33,7 @@ set(REQUIRED_QT_VERSION 5.6.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets)
 
 if(NOT WIN32 AND NOT APPLE)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras DBus)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
 endif()
 
 if(APPLE)
@@ -46,6 +46,7 @@ if(NOT APPLE)
 endif()
 
 if(X11_FOUND)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
     set(HAVE_X11 TRUE)
