@@ -19,8 +19,8 @@
 #ifndef KIDLETIME_H
 #define KIDLETIME_H
 
-#include <QtCore/QObject>
-#include <QtCore/QHash>
+#include <QObject>
+#include <QHash>
 #include <kidletime_export.h>
 class KIdleTimePrivate;
 
