@@ -31,8 +31,8 @@ class KIDLETIME_EXPORT WidgetBasedPoller : public AbstractSystemPoller
     Q_OBJECT
 
 public:
-    WidgetBasedPoller(QObject *parent = nullptr);
-    virtual ~WidgetBasedPoller();
+    explicit WidgetBasedPoller(QObject *parent = nullptr);
+    ~WidgetBasedPoller() override;
 
     bool isAvailable() override;
     bool setUpPoller() override;

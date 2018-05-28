@@ -30,8 +30,8 @@ class XScreensaverBasedPoller: public WidgetBasedPoller
     Q_INTERFACES(AbstractSystemPoller)
 
 public:
-    XScreensaverBasedPoller(QObject *parent = nullptr);
-    virtual ~XScreensaverBasedPoller();
+    explicit XScreensaverBasedPoller(QObject *parent = nullptr);
+    ~XScreensaverBasedPoller() override;
 
 public Q_SLOTS:
     void simulateUserActivity() override;
