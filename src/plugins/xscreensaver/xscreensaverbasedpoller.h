@@ -34,14 +34,14 @@ public:
     virtual ~XScreensaverBasedPoller();
 
 public Q_SLOTS:
-    void simulateUserActivity() Q_DECL_OVERRIDE;
+    void simulateUserActivity() override;
 
 private:
-    bool additionalSetUp() Q_DECL_OVERRIDE;
+    bool additionalSetUp() override;
 
 private Q_SLOTS:
     void screensaverActivated(bool activated);
-    int getIdleTime() Q_DECL_OVERRIDE;
+    int getIdleTime() override;
 
 private:
     OrgFreedesktopScreenSaverInterface *m_screenSaverIface;

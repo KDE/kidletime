@@ -34,20 +34,20 @@ public:
     WidgetBasedPoller(QObject *parent = nullptr);
     virtual ~WidgetBasedPoller();
 
-    bool isAvailable() Q_DECL_OVERRIDE;
-    bool setUpPoller() Q_DECL_OVERRIDE;
-    void unloadPoller() Q_DECL_OVERRIDE;
+    bool isAvailable() override;
+    bool setUpPoller() override;
+    void unloadPoller() override;
 
 protected:
-    bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *object, QEvent *event) override;
 
 public Q_SLOTS:
-    void addTimeout(int nextTimeout) Q_DECL_OVERRIDE;
-    void removeTimeout(int nextTimeout) Q_DECL_OVERRIDE;
-    QList<int> timeouts() const Q_DECL_OVERRIDE;
-    int forcePollRequest() Q_DECL_OVERRIDE;
-    void catchIdleEvent() Q_DECL_OVERRIDE;
-    void stopCatchingIdleEvents() Q_DECL_OVERRIDE;
+    void addTimeout(int nextTimeout) override;
+    void removeTimeout(int nextTimeout) override;
+    QList<int> timeouts() const override;
+    int forcePollRequest() override;
+    void catchIdleEvent() override;
+    void stopCatchingIdleEvents() override;
 
 private Q_SLOTS:
     int poll();
