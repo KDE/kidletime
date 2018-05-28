@@ -3,11 +3,13 @@
 configure_file(config-kidletime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kidletime.h )
 
 set(kidletime_LIB_SRCS
-    logging.cpp
     kidletime.cpp
     abstractsystempoller.cpp
     widgetbasedpoller.cpp # TODO: make optional, to avoid always depending on QtWidgets? Or port to QtGui?
 )
+
+ecm_qt_declare_logging_category(kidletime_LIB_SRCS HEADER logging.h IDENTIFIER KIDLETIME CATEGORY_NAME org.kde.kf5.idletime)
+
 
 set(kidletime_LIBS)
 

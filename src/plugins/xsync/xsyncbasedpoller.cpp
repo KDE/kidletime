@@ -19,7 +19,7 @@
 // Exceptionnally, include QCoreApplication before our own header, because that one includes X11 headers (#define None...)
 #include <QCoreApplication>
 
-#include "../../logging.h"
+#include "xsync_logging.h"
 
 #include "xsyncbasedpoller.h"
 
@@ -72,7 +72,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     if (Q_UNLIKELY(!m_display)) {
         m_available = false;
-        qCWarning(KIDLETIME) << "xcb sync could not find display";
+        qCWarning(KIDLETIME_XSYNC_PLUGIN) << "xcb sync could not find display";
         return;
     }
     m_xcb_connection = XGetXCBConnection(m_display);
@@ -81,7 +81,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     const xcb_query_extension_reply_t *sync_reply = xcb_get_extension_data(m_xcb_connection, &xcb_sync_id);
     if (!sync_reply || !sync_reply->present) {
-        qCWarning(KIDLETIME) << "xcb sync extension not found";
+        qCWarning(KIDLETIME_XSYNC_PLUGIN) << "xcb sync extension not found";
         m_available = false;
         return;
     }
@@ -108,10 +108,10 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     int xcbcounters = xcb_sync_list_system_counters_counters_length(reply);
     xcb_sync_systemcounter_iterator_t it = xcb_sync_list_system_counters_counters_iterator(reply);
     for (int i = 0; i < xcbcounters; ++i) {
-        qCDebug(KIDLETIME) << it.data->counter << it.rem << it.index;
-        qCDebug(KIDLETIME) << "name length" << xcb_sync_systemcounter_name_length(it.data);
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << it.data->counter << it.rem << it.index;
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << "name length" << xcb_sync_systemcounter_name_length(it.data);
         QByteArray name(xcb_sync_systemcounter_name(it.data), xcb_sync_systemcounter_name_length(it.data));
-        qCDebug(KIDLETIME) << name;
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << name;
         xcb_sync_systemcounter_next(&it);
     }
     delete reply;
@@ -134,9 +134,9 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 
     bool idleFound = false;
 
-    qCDebug(KIDLETIME) << ncounters << "counters";
+    qCDebug(KIDLETIME_XSYNC_PLUGIN) << ncounters << "counters";
     for (int i = 0; i < ncounters; ++i) {
-        qCDebug(KIDLETIME) << counters[i].name << counters[i].counter;
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << counters[i].name << counters[i].counter;
         if (!strcmp(counters[i].name, "IDLETIME")) {
             m_idleCounter = counters[i].counter;
             idleFound = true;
@@ -151,9 +151,9 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     }
 
     if (m_available) {
-        qCDebug(KIDLETIME) << "XSync seems available and ready";
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << "XSync seems available and ready";
     } else {
-        qCDebug(KIDLETIME) << "XSync seems not available";
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << "XSync seems not available";
     }
 }
 
@@ -172,11 +172,11 @@ bool XSyncBasedPoller::setUpPoller()
         return false;
     }
 
-    qCDebug(KIDLETIME) << "XSync Inited";
+    qCDebug(KIDLETIME_XSYNC_PLUGIN) << "XSync Inited";
 
     s_globalXSyncBasedPoller()->isActive = true;
 
-    qCDebug(KIDLETIME) << "Supported, init completed";
+    qCDebug(KIDLETIME_XSYNC_PLUGIN) << "Supported, init completed";
 
     return true;
 }
@@ -278,7 +278,7 @@ void XSyncBasedPoller::reloadAlarms()
 
 bool XSyncBasedPoller::xcbEvent(xcb_generic_event_t *event)
 {
-    // qCDebug(KIDLETIME) << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
+    // qCDebug(KIDLETIME_XSYNC_PLUGIN) << event->response_type << "waiting for" << m_sync_event+XCB_SYNC_ALARM_NOTIFY;
     if (event->response_type != m_sync_event + XCB_SYNC_ALARM_NOTIFY) {
         return false;
     }
@@ -332,7 +332,7 @@ void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter co
         XSyncChangeAlarm(dpy, *alarm, flags, &attr);
     } else {
         *alarm = XSyncCreateAlarm(dpy, flags, &attr);
-        qCDebug(KIDLETIME) << "Created alarm" << *alarm;
+        qCDebug(KIDLETIME_XSYNC_PLUGIN) << "Created alarm" << *alarm;
     }
 
     XFlush(m_display);
