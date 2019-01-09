@@ -38,6 +38,8 @@ public:
     {
         delete q;
     }
+    KIdleTimeHelper(const KIdleTimeHelper &) = delete;
+    KIdleTimeHelper &operator=(const KIdleTimeHelper &) = delete;
     KIdleTime *q;
 };
 
