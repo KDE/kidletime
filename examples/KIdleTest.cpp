@@ -26,8 +26,8 @@
 KIdleTest::KIdleTest()
 {
     // connect to idle events
-    connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()),
-            this, SLOT(resumeEvent()));
+    connect(KIdleTime::instance(), &KIdleTime::resumingFromIdle,
+            this, &KIdleTest::resumeEvent);
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int,int)),
             this, SLOT(timeoutReached(int,int)));
 

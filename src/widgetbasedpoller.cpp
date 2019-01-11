@@ -41,14 +41,14 @@ bool WidgetBasedPoller::setUpPoller()
     m_pollTimer = new QTimer(this);
 
     //setup idle timer, with some smart polling
-    connect(m_pollTimer, SIGNAL(timeout()), this, SLOT(poll()));
+    connect(m_pollTimer, &QTimer::timeout, this, &WidgetBasedPoller::poll);
 
     // This code was taken from Lithium/KDE4Powersave
     m_grabber = new QWidget(nullptr, Qt::X11BypassWindowManagerHint);
     m_grabber->move(-1000, -1000);
     m_grabber->setMouseTracking(true);
     m_grabber->installEventFilter(this);
-    m_grabber->setObjectName(QLatin1String("KIdleGrabberWidget"));
+    m_grabber->setObjectName(QStringLiteral("KIdleGrabberWidget"));
 
     return additionalSetUp();
 }
