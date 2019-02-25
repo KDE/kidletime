@@ -171,12 +171,13 @@ void KIdleTime::removeAllIdleTimeouts()
 static QStringList pluginCandidates()
 {
     QStringList ret;
-    foreach (const QString &path, QCoreApplication::libraryPaths()) {
-        QDir pluginDir(path + QLatin1String("/kf5/org.kde.kidletime.platforms"));
+    const QStringList libPath = QCoreApplication::libraryPaths();
+    for (const QString &path : libPath ) {
+        const QDir pluginDir(path + QLatin1String("/kf5/org.kde.kidletime.platforms"));
         if (!pluginDir.exists()) {
             continue;
         }
-        foreach (const QString &entry, pluginDir.entryList(QDir::Files | QDir::NoDotAndDotDot)) {
+        for (const QString &entry : pluginDir.entryList(QDir::Files | QDir::NoDotAndDotDot)) {
             ret << pluginDir.absoluteFilePath(entry);
         }
     }
@@ -185,7 +186,8 @@ static QStringList pluginCandidates()
 
 static AbstractSystemPoller *loadPoller()
 {
-    foreach (const QString &candidate, pluginCandidates()) {
+    const QStringList lstPlugins = pluginCandidates();
+    for (const QString &candidate : lstPlugins) {
         if (!QLibrary::isLibrary(candidate)) {
             continue;
         }
@@ -249,7 +251,8 @@ void KIdleTimePrivate::_k_timeoutReached(int msec)
     Q_Q(KIdleTime);
 
     if (associations.values().contains(msec)) {
-        Q_FOREACH (int key, associations.keys(msec)) {
+        const auto listKeys = associations.keys(msec);
+        for (int key : listKeys) {
             emit q->timeoutReached(key);
             emit q->timeoutReached(key, msec);
         }
