@@ -20,8 +20,7 @@
 #define XSYNCBASEDPOLLER_H
 
 #include "abstractsystempoller.h"
-
-#include <QDebug>
+#include <QHash>
 
 #include <config-kidletime.h>
 
