@@ -8,7 +8,13 @@ set(kidletime_LIB_SRCS
     widgetbasedpoller.cpp # TODO: make optional, to avoid always depending on QtWidgets? Or port to QtGui?
 )
 
-ecm_qt_declare_logging_category(kidletime_LIB_SRCS HEADER logging.h IDENTIFIER KIDLETIME CATEGORY_NAME org.kde.kf5.idletime)
+ecm_qt_declare_logging_category(kidletime_LIB_SRCS
+    HEADER logging.h
+    IDENTIFIER KIDLETIME
+    CATEGORY_NAME org.kde.kf5.idletime
+    DESCRIPTION "kidletime (lib)"
+    EXPORT KIDLETIME
+)
 
 
 set(kidletime_LIBS)
@@ -52,6 +58,13 @@ install(
 )
 
 install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+
+
+ecm_qt_install_logging_categories(
+    EXPORT KIDLETIME
+    FILE kidletime.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
 
 if(BUILD_QCH)
     ecm_add_qch(

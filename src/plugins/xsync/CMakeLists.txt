@@ -5,7 +5,13 @@ set(xsync_plugin_SRCS
     ../../logging.cpp
 )
 
-ecm_qt_declare_logging_category(xsync_plugin_SRCS HEADER xsync_logging.h IDENTIFIER KIDLETIME_XSYNC_PLUGIN CATEGORY_NAME org.kde.kf5.idletime.xsync)
+ecm_qt_declare_logging_category(xsync_plugin_SRCS
+    HEADER xsync_logging.h
+    IDENTIFIER KIDLETIME_XSYNC_PLUGIN
+    CATEGORY_NAME org.kde.kf5.idletime.xsync
+    DESCRIPTION "xsync plugin"
+    EXPORT KIDLETIME
+)
 
 add_library(KF5IdleTimeXcbPlugin0 MODULE ${xsync_plugin_SRCS})
 target_link_libraries(KF5IdleTimeXcbPlugin0
