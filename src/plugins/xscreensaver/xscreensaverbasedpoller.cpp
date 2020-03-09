@@ -59,6 +59,5 @@ void XScreensaverBasedPoller::simulateUserActivity()
     stopCatchingIdleEvents();
     XResetScreenSaver(QX11Info::display());
     XFlush(QX11Info::display());
-    emit resumingFromIdle();
 }
 
