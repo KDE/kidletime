@@ -13,6 +13,7 @@
 
 class QTimer;
 class QEvent;
+class QWindow;
 
 class KIDLETIME_EXPORT WidgetBasedPoller : public AbstractSystemPoller
 {
@@ -49,7 +50,7 @@ private:
 
 private:
     QTimer *m_pollTimer;
-    QWidget *m_grabber;
+    QWindow *m_grabber;
     QList<int> m_timeouts;
 };
 

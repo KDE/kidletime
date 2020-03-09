@@ -6,9 +6,9 @@
 
 #include "widgetbasedpoller.h"
 
-#include <QWidget>
 #include <QTimer>
 #include <QEvent>
+#include <QWindow>
 
 WidgetBasedPoller::WidgetBasedPoller(QObject *parent)
     : AbstractSystemPoller(parent)
@@ -31,10 +31,9 @@ bool WidgetBasedPoller::setUpPoller()
     //setup idle timer, with some smart polling
     connect(m_pollTimer, &QTimer::timeout, this, &WidgetBasedPoller::poll);
 
-    // This code was taken from Lithium/KDE4Powersave
-    m_grabber = new QWidget(nullptr, Qt::X11BypassWindowManagerHint);
-    m_grabber->move(-1000, -1000);
-    m_grabber->setMouseTracking(true);
+    m_grabber = new QWindow();
+    m_grabber->setFlag(Qt::X11BypassWindowManagerHint);
+    m_grabber->setPosition(-1000, -1000);
     m_grabber->installEventFilter(this);
     m_grabber->setObjectName(QStringLiteral("KIdleGrabberWidget"));
 
@@ -76,11 +75,9 @@ bool WidgetBasedPoller::eventFilter(QObject *object, QEvent *event)
 
 void WidgetBasedPoller::waitForActivity()
 {
-    // This code was taken from Lithium/KDE4Powersave
-
     m_grabber->show();
-    m_grabber->grabMouse();
-    m_grabber->grabKeyboard();
+    m_grabber->setMouseGrabEnabled(true);
+    m_grabber->setKeyboardGrabEnabled(true);
 
 }
 
@@ -92,8 +89,8 @@ void WidgetBasedPoller::detectedActivity()
 
 void WidgetBasedPoller::releaseInputLock()
 {
-    m_grabber->releaseMouse();
-    m_grabber->releaseKeyboard();
+    m_grabber->setMouseGrabEnabled(false);
+    m_grabber->setKeyboardGrabEnabled(false);
     m_grabber->hide();
 }
 
