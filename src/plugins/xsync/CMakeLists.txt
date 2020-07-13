@@ -8,7 +8,8 @@ set(xsync_plugin_SRCS
 ecm_qt_declare_logging_category(xsync_plugin_SRCS
     HEADER xsync_logging.h
     IDENTIFIER KIDLETIME_XSYNC_PLUGIN
-    CATEGORY_NAME org.kde.kf5.idletime.xsync
+    CATEGORY_NAME kf.idletime.xsync
+    OLD_CATEGORY_NAMES org.kde.kf5.idletime.xsync
     DESCRIPTION "xsync plugin"
     EXPORT KIDLETIME
 )

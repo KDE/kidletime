@@ -11,7 +11,8 @@ set(kidletime_LIB_SRCS
 ecm_qt_declare_logging_category(kidletime_LIB_SRCS
     HEADER logging.h
     IDENTIFIER KIDLETIME
-    CATEGORY_NAME org.kde.kf5.idletime
+    CATEGORY_NAME kf.idletime
+    OLD_CATEGORY_NAMES org.kde.kf5.idletime
     DESCRIPTION "kidletime (lib)"
     EXPORT KIDLETIME
 )
