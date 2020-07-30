@@ -17,16 +17,13 @@ ecm_qt_declare_logging_category(kidletime_LIB_SRCS
     EXPORT KIDLETIME
 )
 
-
-set(kidletime_LIBS)
-
 add_library(KF5IdleTime ${kidletime_LIB_SRCS})
 generate_export_header(KF5IdleTime BASE_NAME KIdleTime)
 add_library(KF5::IdleTime ALIAS KF5IdleTime)
 target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
 
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
-target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui ${kidletime_LIBS})
+target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui)
 
 set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING}
                                               SOVERSION ${KIDLETIME_SOVERSION}
