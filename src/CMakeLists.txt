@@ -6,7 +6,19 @@ set(kidletime_LIB_SRCS
     kidletime.cpp
     abstractsystempoller.cpp
     widgetbasedpoller.cpp # TODO it doesn't actually use widgets, just GUI. Rename?
+    kidleinhibition.cpp
+    abstractinhibitionbackend.cpp
+    stubinhibitionbackend.cpp
 )
+
+if (NOT ANDROID AND NOT WIN32 AND NOT APPLE)
+    list(APPEND kidletime_LIB_SRCS freedesktopinhibitionbackend.cpp)
+    qt5_add_dbus_interface(kidletime_LIB_SRCS org.freedesktop.ScreenSaver.xml screensaverdbusinterface)
+endif()
+
+if (ANDROID)
+    list(APPEND kidletime_LIB_SRCS androidinhibitionbackend.cpp)
+endif()
 
 ecm_qt_declare_logging_category(kidletime_LIB_SRCS
     HEADER logging.h
@@ -25,6 +37,14 @@ target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INST
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
 target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui)
 
+if (NOT ANDROID AND NOT WIN32 AND NOT APPLE)
+    target_link_libraries(KF5IdleTime PRIVATE Qt5::DBus)
+endif()
+
+if (ANDROID)
+    target_link_libraries(KF5IdleTime PRIVATE Qt5::AndroidExtras)
+endif()
+
 set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING}
                                               SOVERSION ${KIDLETIME_SOVERSION}
                                               EXPORT_NAME IdleTime
@@ -35,6 +55,7 @@ add_subdirectory(plugins)
 ecm_generate_headers(KIdleTime_HEADERS
   HEADER_NAMES
   KIdleTime
+  KIdleInhibition
 
   REQUIRED_HEADERS KIdleTime_HEADERS
 )

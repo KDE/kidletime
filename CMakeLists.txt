@@ -33,6 +33,10 @@ include(KDECMakeSettings)
 set(REQUIRED_QT_VERSION 5.12.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 
+if(ANDROID)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED AndroidExtras)
+endif()
+
 if(APPLE)
     cmake_find_frameworks(CoreFoundation Carbon)
 endif()
