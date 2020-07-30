@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#include <QApplication>
+#include <QGuiApplication>
 #include "KIdleTest.h"
 
 int main(int argc, char **argv)
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     KIdleTest t;
 

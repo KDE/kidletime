@@ -5,7 +5,7 @@ configure_file(config-kidletime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kidle
 set(kidletime_LIB_SRCS
     kidletime.cpp
     abstractsystempoller.cpp
-    widgetbasedpoller.cpp # TODO: make optional, to avoid always depending on QtWidgets? Or port to QtGui?
+    widgetbasedpoller.cpp # TODO it doesn't actually use widgets, just GUI. Rename?
 )
 
 ecm_qt_declare_logging_category(kidletime_LIB_SRCS
@@ -26,7 +26,7 @@ add_library(KF5::IdleTime ALIAS KF5IdleTime)
 target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
 
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
-target_link_libraries(KF5IdleTime PRIVATE Qt5::Widgets ${kidletime_LIBS})
+target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui ${kidletime_LIBS})
 
 set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING}
                                               SOVERSION ${KIDLETIME_SOVERSION}
