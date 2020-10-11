@@ -147,6 +147,7 @@ Q_SIGNALS:
      */
     void resumingFromIdle();
 
+#if KIDLETIME_ENABLE_DEPRECATED_SINCE(5, 76)
     /**
      * Triggered when the system has been idle for x milliseconds, identified by the previously set
      * timeout.
@@ -158,13 +159,20 @@ Q_SIGNALS:
      *
      * @see addIdleTimeout
      * @see removeIdleTimeout
+     * @deprecated Since 5.76, use only timeoutReached(int identifier, int msec)
      */
+    KIDLETIME_DEPRECATED_VERSION(5, 76, "Use only timeoutReached(int identifier, int msec)")
     void timeoutReached(int identifier);
+#endif
 
     /**
-     * Overload. Streams the duration as well. It is guaranteed that \c msec will exactly
-     * correspond to the timeout registered with \link addIdleTimeout \endlink
+     * Triggered when the system has been idle for x milliseconds, identified by the previously set
+     * timeout.
      *
+     * This signal is triggered whenever each timeout previously registered with addIdleTimeout(int)
+     * is reached. It is guaranteed that \p msec will exactly correspond to the identified timeout.
+     *
+     * @param identifier the identifier of the timeout the system has reached
      * @param msec the time, in milliseconds, the system has been idle for
      *
      * @see addIdleTimeout

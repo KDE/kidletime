@@ -18,7 +18,14 @@ ecm_qt_declare_logging_category(kidletime_LIB_SRCS
 )
 
 add_library(KF5IdleTime ${kidletime_LIB_SRCS})
-generate_export_header(KF5IdleTime BASE_NAME KIdleTime)
+ecm_generate_export_header(KF5IdleTime
+    BASE_NAME KIdleTime
+    GROUP_BASE_NAME KF
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 5.76
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 add_library(KF5::IdleTime ALIAS KF5IdleTime)
 target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
 
@@ -80,6 +87,7 @@ if(BUILD_QCH)
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
             KIDLETIME_EXPORT
+            "KIDLETIME_DEPRECATED_VERSION(x, y, t)"
         TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
         QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
         COMPONENT Devel

@@ -241,7 +241,9 @@ void KIdleTimePrivate::_k_timeoutReached(int msec)
     if (associations.values().contains(msec)) {
         const auto listKeys = associations.keys(msec);
         for (int key : listKeys) {
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 76)
             emit q->timeoutReached(key);
+#endif
             emit q->timeoutReached(key, msec);
         }
     }
