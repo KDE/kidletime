@@ -172,30 +172,57 @@ static QStringList pluginCandidates()
     return ret;
 }
 
+static bool checkPlatform(const QJsonObject &metadata, const QString &platformName)
+{
+    const QJsonArray platforms = metadata.value(QStringLiteral("MetaData"))
+            .toObject().value(QStringLiteral("platforms")).toArray();
+    return std::any_of(platforms.begin(), platforms.end(), [&platformName](const QJsonValue &value) {
+        return QString::compare(platformName, value.toString(), Qt::CaseInsensitive) == 0;
+    });
+}
+
 static AbstractSystemPoller *loadPoller()
 {
+    const QString platformName = QGuiApplication::platformName();
+
+    const QVector<QStaticPlugin> staticPlugins = QPluginLoader::staticPlugins();
+    for (const QStaticPlugin &staticPlugin : staticPlugins) {
+        const QJsonObject metadata = staticPlugin.metaData();
+        if (metadata.value(QLatin1String("IID")) != QLatin1String(AbstractSystemPoller_iid)) {
+            continue;
+        }
+        if (checkPlatform(metadata, platformName)) {
+            AbstractSystemPoller *poller = qobject_cast<AbstractSystemPoller *>(staticPlugin.instance());
+            if (poller) {
+                if (poller->isAvailable()) {
+                    qCDebug(KIDLETIME) << "Loaded system poller from a static plugin";
+                    return poller;
+                }
+                delete poller;
+            }
+        }
+    }
+
     const QStringList lstPlugins = pluginCandidates();
     for (const QString &candidate : lstPlugins) {
         if (!QLibrary::isLibrary(candidate)) {
             continue;
         }
         QPluginLoader loader(candidate);
-        QJsonObject metaData = loader.metaData();
-        const QJsonArray platforms = metaData.value(QStringLiteral("MetaData")).toObject().value(QStringLiteral("platforms")).toArray();
-        for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-            if (QString::compare(QGuiApplication::platformName(), (*it).toString(), Qt::CaseInsensitive) == 0) {
-                AbstractSystemPoller *poller = qobject_cast< AbstractSystemPoller* >(loader.instance());
-                if (poller) {
-                    qCDebug(KIDLETIME) << "Trying plugin" << candidate;
-                    if (poller->isAvailable()) {
-                        qCDebug(KIDLETIME) << "Using" << candidate << "for platform" << QGuiApplication::platformName();
-                        return poller;
-                    }
-                    delete poller;
+        if (checkPlatform(loader.metaData(), platformName)) {
+            AbstractSystemPoller *poller = qobject_cast< AbstractSystemPoller* >(loader.instance());
+            if (poller) {
+                qCDebug(KIDLETIME) << "Trying plugin" << candidate;
+                if (poller->isAvailable()) {
+                    qCDebug(KIDLETIME) << "Using" << candidate << "for platform" << platformName;
+                    return poller;
                 }
+                delete poller;
             }
         }
     }
+
+    qCWarning(KIDLETIME) << "Could not find any system poller plugin";
     return nullptr;
 }
 

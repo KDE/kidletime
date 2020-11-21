@@ -11,6 +11,8 @@
 
 #include <QObject>
 
+#define AbstractSystemPoller_iid "org.kde.kidletime.AbstractSystemPoller"
+
 class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
 {
     Q_OBJECT
@@ -39,6 +41,6 @@ Q_SIGNALS:
 
 };
 
-Q_DECLARE_INTERFACE(AbstractSystemPoller, "org.kde.kidletime.AbstractSystemPoller")
+Q_DECLARE_INTERFACE(AbstractSystemPoller, AbstractSystemPoller_iid)
 
 #endif /* ABSTRACTSYSTEMPOLLER_H */
