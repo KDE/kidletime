@@ -81,7 +81,6 @@ KIdleTime::~KIdleTime()
 {
     Q_D(KIdleTime);
     d->unloadCurrentSystem();
-    delete d_ptr;
 }
 
 void KIdleTime::catchNextResumeEvent()

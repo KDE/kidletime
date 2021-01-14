@@ -10,6 +10,8 @@
 #include <QObject>
 #include <QHash>
 #include <kidletime_export.h>
+#include <memory>
+
 class KIdleTimePrivate;
 
 /**
@@ -183,7 +185,7 @@ Q_SIGNALS:
 private:
     KIdleTime();
 
-    KIdleTimePrivate *const d_ptr;
+    std::unique_ptr<KIdleTimePrivate> const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void _k_resumingFromIdle())
     Q_PRIVATE_SLOT(d_func(), void _k_timeoutReached(int))
