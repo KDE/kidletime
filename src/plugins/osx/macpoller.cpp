@@ -173,7 +173,7 @@ int MacPoller::poll()
     for (int i : qAsConst(m_timeouts)) {
         if ((i - idle < 1000 && i > idle) || (idle - i < 1000 && idle > i)) {
             // Bingo!
-            emit timeoutReached(i);
+            Q_EMIT timeoutReached(i);
         }
     }
 
@@ -204,7 +204,7 @@ void MacPoller::stopCatchingIdleEvents()
 void MacPoller::triggerResume()
 {
     if (m_catch) {
-        emit resumingFromIdle();
+        Q_EMIT resumingFromIdle();
         stopCatchingIdleEvents();
     }
 }

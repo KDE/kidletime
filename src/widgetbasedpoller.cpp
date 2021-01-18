@@ -84,7 +84,7 @@ void WidgetBasedPoller::waitForActivity()
 void WidgetBasedPoller::detectedActivity()
 {
     stopCatchingIdleEvents();
-    emit resumingFromIdle();
+    Q_EMIT resumingFromIdle();
 }
 
 void WidgetBasedPoller::releaseInputLock()
@@ -102,7 +102,7 @@ int WidgetBasedPoller::poll()
     for(int timeOut : qAsConst(m_timeouts)) {
         if ( ( timeOut - idle < 300 && timeOut >= idle ) || ( idle - timeOut < 300 && idle > timeOut ) ) {
             // Bingo!
-            emit timeoutReached( timeOut );
+            Q_EMIT timeoutReached( timeOut );
         }
     }
 

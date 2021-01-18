@@ -255,7 +255,7 @@ void KIdleTimePrivate::_k_resumingFromIdle()
     Q_Q(KIdleTime);
 
     if (catchResume) {
-        emit q->resumingFromIdle();
+        Q_EMIT q->resumingFromIdle();
         q->stopCatchingResumeEvent();
     }
 }
@@ -268,9 +268,9 @@ void KIdleTimePrivate::_k_timeoutReached(int msec)
         const auto listKeys = associations.keys(msec);
         for (int key : listKeys) {
 #if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 76)
-            emit q->timeoutReached(key);
+            Q_EMIT q->timeoutReached(key);
 #endif
-            emit q->timeoutReached(key, msec);
+            Q_EMIT q->timeoutReached(key, msec);
         }
     }
 }
