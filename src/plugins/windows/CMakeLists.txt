@@ -11,5 +11,5 @@ install(
     TARGETS
         KF5IdleTimeWindowsPlugin
     DESTINATION
-        ${PLUGIN_INSTALL_DIR}/kf5/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf5/org.kde.kidletime.platforms/
 )
