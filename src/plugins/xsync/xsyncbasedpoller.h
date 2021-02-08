@@ -38,7 +38,10 @@ public:
 public Q_SLOTS:
     void addTimeout(int nextTimeout) override;
     void removeTimeout(int nextTimeout) override;
-    QList<int> timeouts() const override;
+
+    // TODO KF6: Make it a public method
+    QList<int> timeouts() const override; // clazy:exclude=const-signal-or-slot
+
     int forcePollRequest() override;
     void catchIdleEvent() override;
     void stopCatchingIdleEvents() override;

@@ -122,15 +122,20 @@ void KIdleTime::removeIdleTimeout(int identifier)
 {
     Q_D(KIdleTime);
 
-    if (!d->associations.contains(identifier) || !d->poller) {
+    const auto it = d->associations.constFind(identifier);
+    if (it == d->associations.cend() || !d->poller) {
         return;
     }
 
-    int msec = d->associations[identifier];
+    const int msec = it.value();
 
-    d->associations.remove(identifier);
+    d->associations.erase(it);
 
-    if (!d->associations.values().contains(msec)) {
+    const bool isFound = std::any_of(d->associations.cbegin(), d->associations.cend(), [msec](int i) {
+        return i == msec;
+    });
+
+    if (!isFound) {
         d->poller.data()->removeTimeout(msec);
     }
 }
@@ -139,14 +144,14 @@ void KIdleTime::removeAllIdleTimeouts()
 {
     Q_D(KIdleTime);
 
-    QHash< int, int >::iterator i = d->associations.begin();
-    QSet< int > removed;
+    QSet<int> removed;
     removed.reserve(d->associations.size());
 
-    while (i != d->associations.end()) {
-        int msec = d->associations[i.key()];
+    auto it = d->associations.begin();
+    while (it != d->associations.end()) {
+        const int msec = it.value();
 
-        i = d->associations.erase(i);
+        it = d->associations.erase(it);
 
         if (!removed.contains(msec) && d->poller) {
             d->poller.data()->removeTimeout(msec);
@@ -158,16 +163,19 @@ void KIdleTime::removeAllIdleTimeouts()
 static QStringList pluginCandidates()
 {
     QStringList ret;
-    const QStringList libPath = QCoreApplication::libraryPaths();
-    for (const QString &path : libPath ) {
+    const QStringList libPaths = QCoreApplication::libraryPaths();
+    for (const QString &path : libPaths) {
         const QDir pluginDir(path + QLatin1String("/kf5/org.kde.kidletime.platforms"));
         if (!pluginDir.exists()) {
             continue;
         }
-        for (const QString &entry : pluginDir.entryList(QDir::Files | QDir::NoDotAndDotDot)) {
+
+        const auto entries = pluginDir.entryList(QDir::Files | QDir::NoDotAndDotDot);
+        for (const QString &entry : entries) {
             ret << pluginDir.absoluteFilePath(entry);
         }
     }
+
     return ret;
 }
 
@@ -264,13 +272,12 @@ void KIdleTimePrivate::_k_timeoutReached(int msec)
 {
     Q_Q(KIdleTime);
 
-    if (associations.values().contains(msec)) {
-        const auto listKeys = associations.keys(msec);
-        for (int key : listKeys) {
+    for (auto it = associations.cbegin(); it != associations.cend(); ++it) {
+        if (it.value() == msec) {
 #if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 76)
-            Q_EMIT q->timeoutReached(key);
+            Q_EMIT q->timeoutReached(it.key());
 #endif
-            Q_EMIT q->timeoutReached(key, msec);
+            Q_EMIT q->timeoutReached(it.key(), msec);
         }
     }
 }
