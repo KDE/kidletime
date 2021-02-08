@@ -36,10 +36,12 @@ public:
 
     bool xcbEvent(xcb_generic_event_t *event);
 
+    QList<int> timeouts() const override;
+
 public Q_SLOTS:
     void addTimeout(int nextTimeout) override;
     void removeTimeout(int nextTimeout) override;
-    QList<int> timeouts() const override;
+
     int forcePollRequest() override;
     void catchIdleEvent() override;
     void stopCatchingIdleEvents() override;

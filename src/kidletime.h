@@ -180,7 +180,7 @@ Q_SIGNALS:
      * @deprecated Since 5.76, use only timeoutReached(int identifier, int msec)
      */
     KIDLETIME_DEPRECATED_VERSION(5, 76, "Use only timeoutReached(int identifier, int msec)")
-    void timeoutReached(int identifier);
+    void timeoutReached(int identifier); // clazy:exclude=overloaded-signal
 #endif
 
     /**
@@ -196,7 +196,7 @@ Q_SIGNALS:
      * @see addIdleTimeout
      * @see removeIdleTimeout
      */
-    void timeoutReached(int identifier, int msec);
+    void timeoutReached(int identifier, int msec); // clazy:exclude=overloaded-signal
 
 private:
     KIdleTime();

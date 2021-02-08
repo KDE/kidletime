@@ -28,7 +28,10 @@ public:
 public Q_SLOTS:
     virtual void addTimeout(int nextTimeout) = 0;
     virtual void removeTimeout(int nextTimeout) = 0;
-    virtual QList<int> timeouts() const = 0;
+
+    // TODO KF6: Make it a public method
+    virtual QList<int> timeouts() const = 0; // clazy:exclude=const-signal-or-slot
+
     virtual int forcePollRequest() = 0;
     virtual void catchIdleEvent() = 0;
     virtual void stopCatchingIdleEvents() = 0;

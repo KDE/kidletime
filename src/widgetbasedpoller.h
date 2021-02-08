@@ -27,13 +27,15 @@ public:
     bool setUpPoller() override;
     void unloadPoller() override;
 
+    QList<int> timeouts() const override;
+
 protected:
     bool eventFilter(QObject *object, QEvent *event) override;
 
 public Q_SLOTS:
     void addTimeout(int nextTimeout) override;
     void removeTimeout(int nextTimeout) override;
-    QList<int> timeouts() const override;
+
     int forcePollRequest() override;
     void catchIdleEvent() override;
     void stopCatchingIdleEvents() override;
