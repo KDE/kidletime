@@ -18,7 +18,6 @@ class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
     Q_OBJECT
 
 public:
-
     AbstractSystemPoller(QObject *parent = nullptr);
     virtual ~AbstractSystemPoller();
 
@@ -38,7 +37,6 @@ public Q_SLOTS:
 Q_SIGNALS:
     void resumingFromIdle();
     void timeoutReached(int msec);
-
 };
 
 Q_DECLARE_INTERFACE(AbstractSystemPoller, AbstractSystemPoller_iid)

@@ -14,9 +14,9 @@
 #include <X11/extensions/scrnsaver.h>
 
 XScreensaverBasedPoller::XScreensaverBasedPoller(QObject *parent)
-    : WidgetBasedPoller(parent), m_screenSaverIface(nullptr)
+    : WidgetBasedPoller(parent)
+    , m_screenSaverIface(nullptr)
 {
-
 }
 
 XScreensaverBasedPoller::~XScreensaverBasedPoller()
@@ -26,8 +26,9 @@ XScreensaverBasedPoller::~XScreensaverBasedPoller()
 bool XScreensaverBasedPoller::additionalSetUp()
 {
     m_screenSaverIface = new OrgFreedesktopScreenSaverInterface(QLatin1String("org.freedesktop.ScreenSaver"),
-            QLatin1String("/ScreenSaver"),
-            QDBusConnection::sessionBus(), this);
+                                                                QLatin1String("/ScreenSaver"),
+                                                                QDBusConnection::sessionBus(),
+                                                                this);
 
     connect(m_screenSaverIface, SIGNAL(ActiveChanged(bool)), SLOT(screensaverActivated(bool)));
 
@@ -60,4 +61,3 @@ void XScreensaverBasedPoller::simulateUserActivity()
     XResetScreenSaver(QX11Info::display());
     XFlush(QX11Info::display());
 }
-

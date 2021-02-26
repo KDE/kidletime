@@ -11,7 +11,7 @@
 
 #include "screensaver_interface.h"
 
-class XScreensaverBasedPoller: public WidgetBasedPoller
+class XScreensaverBasedPoller : public WidgetBasedPoller
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "xcb.json")

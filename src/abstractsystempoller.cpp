@@ -14,4 +14,3 @@ AbstractSystemPoller::AbstractSystemPoller(QObject *parent)
 AbstractSystemPoller::~AbstractSystemPoller()
 {
 }
-

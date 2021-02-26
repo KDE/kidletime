@@ -6,8 +6,8 @@
 
 #include "widgetbasedpoller.h"
 
-#include <QTimer>
 #include <QEvent>
+#include <QTimer>
 #include <QWindow>
 
 WidgetBasedPoller::WidgetBasedPoller(QObject *parent)
@@ -28,7 +28,7 @@ bool WidgetBasedPoller::setUpPoller()
 {
     m_pollTimer = new QTimer(this);
 
-    //setup idle timer, with some smart polling
+    // setup idle timer, with some smart polling
     connect(m_pollTimer, &QTimer::timeout, this, &WidgetBasedPoller::poll);
 
     m_grabber = new QWindow();
@@ -59,8 +59,7 @@ void WidgetBasedPoller::addTimeout(int nextTimeout)
 
 bool WidgetBasedPoller::eventFilter(QObject *object, QEvent *event)
 {
-    if (object == m_grabber
-            && (event->type() == QEvent::MouseMove || event->type() == QEvent::KeyPress)) {
+    if (object == m_grabber && (event->type() == QEvent::MouseMove || event->type() == QEvent::KeyPress)) {
         detectedActivity();
         return true;
     } else if (object != m_grabber) {
@@ -70,7 +69,6 @@ bool WidgetBasedPoller::eventFilter(QObject *object, QEvent *event)
 
     // Otherwise, simply ignore it
     return false;
-
 }
 
 void WidgetBasedPoller::waitForActivity()
@@ -78,7 +76,6 @@ void WidgetBasedPoller::waitForActivity()
     m_grabber->show();
     m_grabber->setMouseGrabEnabled(true);
     m_grabber->setKeyboardGrabEnabled(true);
-
 }
 
 void WidgetBasedPoller::detectedActivity()
@@ -99,10 +96,10 @@ int WidgetBasedPoller::poll()
     int idle = getIdleTime();
 
     // Check if we reached a timeout..
-    for(int timeOut : qAsConst(m_timeouts)) {
-        if ( ( timeOut - idle < 300 && timeOut >= idle ) || ( idle - timeOut < 300 && idle > timeOut ) ) {
+    for (int timeOut : qAsConst(m_timeouts)) {
+        if ((timeOut - idle < 300 && timeOut >= idle) || (idle - timeOut < 300 && idle > timeOut)) {
             // Bingo!
-            Q_EMIT timeoutReached( timeOut );
+            Q_EMIT timeoutReached(timeOut);
         }
     }
 
@@ -115,7 +112,7 @@ int WidgetBasedPoller::poll()
         }
     }
 
-    //qDebug() << "mintime " << mintime << "idle " << idle;
+    // qDebug() << "mintime " << mintime << "idle " << idle;
 
     if (mintime != 0) {
         m_pollTimer->start(mintime - idle);
@@ -146,4 +143,3 @@ void WidgetBasedPoller::stopCatchingIdleEvents()
 {
     releaseInputLock();
 }
-

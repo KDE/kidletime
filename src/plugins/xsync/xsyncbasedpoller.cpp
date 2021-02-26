@@ -19,12 +19,16 @@
 class XSyncBasedPollerHelper : public QAbstractNativeEventFilter
 {
 public:
-    XSyncBasedPollerHelper() : q(nullptr), isActive(false) {}
+    XSyncBasedPollerHelper()
+        : q(nullptr)
+        , isActive(false)
+    {
+    }
     ~XSyncBasedPollerHelper()
     {
         delete q;
     }
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override
 #else
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override
@@ -82,7 +86,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
 #if 0
 
     // Workaround for https://bugs.freedesktop.org/show_bug.cgi?id=23403
-#define xcb_sync_systemcounter_name(sc) (((char *) &(sc)->name_len) + 2)
+#define xcb_sync_systemcounter_name(sc) (((char *)&(sc)->name_len) + 2)
 
     xcb_sync_list_system_counters_cookie_t cookie = xcb_sync_list_system_counters(m_xcb_connection);
     xcb_sync_list_system_counters_reply_t *reply = xcb_sync_list_system_counters_reply(m_xcb_connection, cookie, NULL);
@@ -194,8 +198,7 @@ void XSyncBasedPoller::addTimeout(int nextTimeout)
 
     XSyncIntToValue(&timeout, nextTimeout);
 
-    setAlarm(m_display, &newalarm, m_idleCounter,
-             XSyncPositiveComparison, timeout);
+    setAlarm(m_display, &newalarm, m_idleCounter, XSyncPositiveComparison, timeout);
 
     m_timeoutAlarm.insert(nextTimeout, newalarm);
 }
@@ -246,14 +249,13 @@ void XSyncBasedPoller::catchIdleEvent()
      * we have to subtract 1 from the counter value
      */
 
-    //NOTE: this must be a int, else compilation might fail
+    // NOTE: this must be a int, else compilation might fail
     int overflow;
     XSyncValue add;
     XSyncValue plusone;
     XSyncIntToValue(&add, -1);
     XSyncValueAdd(&plusone, idleTime, add, &overflow);
-    setAlarm(m_display, &m_resetAlarm, m_idleCounter,
-             XSyncNegativeComparison, plusone);
+    setAlarm(m_display, &m_resetAlarm, m_idleCounter, XSyncNegativeComparison, plusone);
 }
 
 void XSyncBasedPoller::reloadAlarms()
@@ -263,8 +265,7 @@ void XSyncBasedPoller::reloadAlarms()
     for (QHash<int, XSyncAlarm>::iterator i = m_timeoutAlarm.begin(); i != m_timeoutAlarm.end(); ++i) {
         XSyncIntToValue(&timeout, i.key());
 
-        setAlarm(m_display, &(i.value()), m_idleCounter,
-                 XSyncPositiveComparison, timeout);
+        setAlarm(m_display, &(i.value()), m_idleCounter, XSyncPositiveComparison, timeout);
     }
 }
 
@@ -301,26 +302,24 @@ bool XSyncBasedPoller::xcbEvent(xcb_generic_event_t *event)
     return false;
 }
 
-void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter counter,
-                                XSyncTestType test, XSyncValue value)
+void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter counter, XSyncTestType test, XSyncValue value)
 {
-    XSyncAlarmAttributes  attr;
-    XSyncValue            delta;
-    unsigned int          flags;
+    XSyncAlarmAttributes attr;
+    XSyncValue delta;
+    unsigned int flags;
 
     XSyncIntToValue(&delta, 0);
 
-    attr.trigger.counter     = counter;
-    attr.trigger.value_type  = XSyncAbsolute;
-    attr.trigger.test_type   = test;
-    attr.trigger.wait_value  = value;
-    attr.delta               = delta;
+    attr.trigger.counter = counter;
+    attr.trigger.value_type = XSyncAbsolute;
+    attr.trigger.test_type = test;
+    attr.trigger.wait_value = value;
+    attr.delta = delta;
 
-    flags = XSyncCACounter | XSyncCAValueType | XSyncCATestType |
-            XSyncCAValue | XSyncCADelta;
+    flags = XSyncCACounter | XSyncCAValueType | XSyncCATestType | XSyncCAValue | XSyncCADelta;
 
     if (*alarm) {
-        //xcb_sync_change_alarm_checked(m_xcb_connection, alarmId,  ...
+        // xcb_sync_change_alarm_checked(m_xcb_connection, alarmId,  ...
         XSyncChangeAlarm(dpy, *alarm, flags, &attr);
     } else {
         *alarm = XSyncCreateAlarm(dpy, flags, &attr);
@@ -335,4 +334,3 @@ void XSyncBasedPoller::simulateUserActivity()
     XResetScreenSaver(m_display);
     XFlush(m_display);
 }
-

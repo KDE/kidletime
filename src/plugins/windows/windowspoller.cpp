@@ -75,4 +75,3 @@ void WindowsPoller::checkForIdle()
         Q_EMIT resumingFromIdle();
     }
 }
-

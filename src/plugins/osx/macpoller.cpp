@@ -12,8 +12,8 @@
 // Why does Apple have to make this so complicated?
 static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
 {
-    OSStatus  err;
-    FSRef   frameworksFolderRef;
+    OSStatus err;
+    FSRef frameworksFolderRef;
     CFURLRef baseURL;
     CFURLRef bundleURL;
 
@@ -91,12 +91,12 @@ pascal void MacPoller::IdleTimerAction(EventLoopTimerRef, EventLoopIdleTimerMess
 }
 
 // Typedef for the function we're getting back from CFBundleGetFunctionPointerForName.
-typedef OSStatus(*InstallEventLoopIdleTimerPtr)(EventLoopRef inEventLoop,
-        EventTimerInterval   inFireDelay,
-        EventTimerInterval   inInterval,
-        EventLoopIdleTimerUPP    inTimerProc,
-        void                *inTimerData,
-        EventLoopTimerRef   *outTimer);
+typedef OSStatus (*InstallEventLoopIdleTimerPtr)(EventLoopRef inEventLoop,
+                                                 EventTimerInterval inFireDelay,
+                                                 EventTimerInterval inInterval,
+                                                 EventLoopIdleTimerUPP inTimerProc,
+                                                 void *inTimerData,
+                                                 EventLoopTimerRef *outTimer);
 
 MacPoller::MacPoller(QObject *parent)
     : AbstractSystemPoller(parent)
@@ -213,4 +213,3 @@ void MacPoller::simulateUserActivity()
 {
     // TODO
 }
-

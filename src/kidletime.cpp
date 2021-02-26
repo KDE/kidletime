@@ -12,8 +12,8 @@
 #include "logging.h"
 
 #include <QDir>
-#include <QJsonArray>
 #include <QGuiApplication>
+#include <QJsonArray>
 #include <QPluginLoader>
 #include <QPointer>
 #include <QSet>
@@ -21,7 +21,10 @@
 class KIdleTimeHelper
 {
 public:
-    KIdleTimeHelper() : q(nullptr) {}
+    KIdleTimeHelper()
+        : q(nullptr)
+    {
+    }
     ~KIdleTimeHelper()
     {
         delete q;
@@ -46,8 +49,13 @@ class KIdleTimePrivate
 {
     Q_DECLARE_PUBLIC(KIdleTime)
     KIdleTime *q_ptr;
+
 public:
-    KIdleTimePrivate() : catchResume(false), currentId(0) {}
+    KIdleTimePrivate()
+        : catchResume(false)
+        , currentId(0)
+    {
+    }
 
     void loadSystem();
     void unloadCurrentSystem();
@@ -139,8 +147,8 @@ void KIdleTime::removeAllIdleTimeouts()
 {
     Q_D(KIdleTime);
 
-    QHash< int, int >::iterator i = d->associations.begin();
-    QSet< int > removed;
+    QHash<int, int>::iterator i = d->associations.begin();
+    QSet<int> removed;
     removed.reserve(d->associations.size());
 
     while (i != d->associations.end()) {
@@ -159,7 +167,7 @@ static QStringList pluginCandidates()
 {
     QStringList ret;
     const QStringList libPath = QCoreApplication::libraryPaths();
-    for (const QString &path : libPath ) {
+    for (const QString &path : libPath) {
         const QDir pluginDir(path + QLatin1String("/kf5/org.kde.kidletime.platforms"));
         if (!pluginDir.exists()) {
             continue;
@@ -173,8 +181,7 @@ static QStringList pluginCandidates()
 
 static bool checkPlatform(const QJsonObject &metadata, const QString &platformName)
 {
-    const QJsonArray platforms = metadata.value(QStringLiteral("MetaData"))
-            .toObject().value(QStringLiteral("platforms")).toArray();
+    const QJsonArray platforms = metadata.value(QStringLiteral("MetaData")).toObject().value(QStringLiteral("platforms")).toArray();
     return std::any_of(platforms.begin(), platforms.end(), [&platformName](const QJsonValue &value) {
         return QString::compare(platformName, value.toString(), Qt::CaseInsensitive) == 0;
     });
@@ -209,7 +216,7 @@ static AbstractSystemPoller *loadPoller()
         }
         QPluginLoader loader(candidate);
         if (checkPlatform(loader.metaData(), platformName)) {
-            AbstractSystemPoller *poller = qobject_cast< AbstractSystemPoller* >(loader.instance());
+            AbstractSystemPoller *poller = qobject_cast<AbstractSystemPoller *>(loader.instance());
             if (poller) {
                 qCDebug(KIDLETIME) << "Trying plugin" << candidate;
                 if (poller->isAvailable()) {

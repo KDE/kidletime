@@ -11,7 +11,7 @@
 
 #include <Carbon/Carbon.h>
 
-class MacPoller: public AbstractSystemPoller
+class MacPoller : public AbstractSystemPoller
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "osx.json")

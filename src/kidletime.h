@@ -7,8 +7,8 @@
 #ifndef KIDLETIME_H
 #define KIDLETIME_H
 
-#include <QObject>
 #include <QHash>
+#include <QObject>
 #include <kidletime_export.h>
 #include <memory>
 
@@ -189,7 +189,6 @@ private:
 
     Q_PRIVATE_SLOT(d_func(), void _k_resumingFromIdle())
     Q_PRIVATE_SLOT(d_func(), void _k_timeoutReached(int))
-
 };
 
 #endif /* KIDLETIME_H */
