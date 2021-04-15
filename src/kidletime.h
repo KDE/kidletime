@@ -1,5 +1,6 @@
 /* This file is part of the KDE libraries
  * SPDX-FileCopyrightText: 2009 Dario Freddi <drf at kde.org>
+ * SPDX-FileCopyrightText: 2021 Harald Sitter <sitter@kde.org>
  *
  * SPDX-License-Identifier: LGPL-2.0-only
  */
@@ -11,6 +12,10 @@
 #include <QObject>
 #include <kidletime_export.h>
 #include <memory>
+
+#if __has_include(<chrono>)
+#include <chrono>
+#endif
 
 class KIdleTimePrivate;
 
@@ -91,6 +96,17 @@ public Q_SLOTS:
      *
      */
     int addIdleTimeout(int msec);
+
+#if __has_include(<chrono>)
+    /**
+     * Convenience overload suporting C++ chrono types. May also be used with chrono literals.
+     * @since 5.83
+     */
+    int addIdleTimeout(std::chrono::milliseconds msec)
+    {
+        return addIdleTimeout(int(msec.count()));
+    }
+#endif
 
     /**
      * Stops catching the idle timeout identified by the token \c identifier,
