@@ -32,7 +32,7 @@ target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INST
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
 target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui)
 
-set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION_STRING}
+set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION}
                                               SOVERSION ${KIDLETIME_SOVERSION}
                                               EXPORT_NAME IdleTime
 )
