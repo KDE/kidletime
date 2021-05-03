@@ -202,9 +202,6 @@ private:
     KIdleTime();
 
     std::unique_ptr<KIdleTimePrivate> const d_ptr;
-
-    Q_PRIVATE_SLOT(d_func(), void _k_resumingFromIdle())
-    Q_PRIVATE_SLOT(d_func(), void _k_timeoutReached(int))
 };
 
 #endif /* KIDLETIME_H */

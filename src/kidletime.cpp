@@ -59,8 +59,8 @@ public:
 
     void loadSystem();
     void unloadCurrentSystem();
-    void _k_resumingFromIdle();
-    void _k_timeoutReached(int msec);
+    void resumingFromIdle();
+    void timeoutReached(int msec);
 
     QPointer<AbstractSystemPoller> poller;
     bool catchResume;
@@ -81,8 +81,12 @@ KIdleTime::KIdleTime()
     Q_D(KIdleTime);
     d->loadSystem();
 
-    connect(d->poller.data(), SIGNAL(resumingFromIdle()), this, SLOT(_k_resumingFromIdle()));
-    connect(d->poller.data(), SIGNAL(timeoutReached(int)), this, SLOT(_k_timeoutReached(int)));
+    connect(d->poller.data(), &AbstractSystemPoller::resumingFromIdle, this, [d]() {
+        d->resumingFromIdle();
+    });
+    connect(d->poller.data(), &AbstractSystemPoller::timeoutReached, this, [d](int msec) {
+        d->timeoutReached(msec);
+    });
 }
 
 KIdleTime::~KIdleTime()
@@ -257,7 +261,7 @@ void KIdleTimePrivate::unloadCurrentSystem()
     }
 }
 
-void KIdleTimePrivate::_k_resumingFromIdle()
+void KIdleTimePrivate::resumingFromIdle()
 {
     Q_Q(KIdleTime);
 
@@ -267,7 +271,7 @@ void KIdleTimePrivate::_k_resumingFromIdle()
     }
 }
 
-void KIdleTimePrivate::_k_timeoutReached(int msec)
+void KIdleTimePrivate::timeoutReached(int msec)
 {
     Q_Q(KIdleTime);
 

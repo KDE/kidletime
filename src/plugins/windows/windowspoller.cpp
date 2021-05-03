@@ -43,7 +43,7 @@ int WindowsPoller::getIdleTime()
 bool WindowsPoller::additionalSetUp()
 {
     m_idleTimer = new QTimer(this);
-    connect(m_idleTimer, SIGNAL(timeout()), this, SLOT(checkForIdle()));
+    connect(m_idleTimer, &QTimer::timeout, this, &WindowsPoller::checkForIdle);
     return true;
 }
 

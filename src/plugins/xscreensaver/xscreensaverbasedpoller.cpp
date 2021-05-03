@@ -30,7 +30,7 @@ bool XScreensaverBasedPoller::additionalSetUp()
                                                                 QDBusConnection::sessionBus(),
                                                                 this);
 
-    connect(m_screenSaverIface, SIGNAL(ActiveChanged(bool)), SLOT(screensaverActivated(bool)));
+    connect(m_screenSaverIface, &OrgFreedesktopScreenSaverInterface::ActiveChanged, this, &XScreensaverBasedPoller::screensaverActivated);
 
     return true;
 }

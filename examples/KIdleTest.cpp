@@ -14,7 +14,7 @@ KIdleTest::KIdleTest()
 {
     // connect to idle events
     connect(KIdleTime::instance(), &KIdleTime::resumingFromIdle, this, &KIdleTest::resumeEvent);
-    connect(KIdleTime::instance(), SIGNAL(timeoutReached(int, int)), this, SLOT(timeoutReached(int, int)));
+    connect(KIdleTime::instance(), QOverload<int, int>::of(&KIdleTime::timeoutReached), this, &KIdleTest::timeoutReached);
 
     // register to get informed for the very next user event
     KIdleTime::instance()->catchNextResumeEvent();
