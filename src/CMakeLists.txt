@@ -1,14 +1,15 @@
-######## kidletime ####################
-
 configure_file(config-kidletime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kidletime.h )
 
-set(kidletime_LIB_SRCS
+add_library(KF5IdleTime)
+add_library(KF5::IdleTime ALIAS KF5IdleTime)
+
+target_sources(KF5IdleTime PRIVATE
     kidletime.cpp
     abstractsystempoller.cpp
     widgetbasedpoller.cpp # TODO it doesn't actually use widgets, just GUI. Rename?
 )
 
-ecm_qt_declare_logging_category(kidletime_LIB_SRCS
+ecm_qt_declare_logging_category(KF5IdleTime
     HEADER logging.h
     IDENTIFIER KIDLETIME
     CATEGORY_NAME kf.idletime
@@ -17,7 +18,6 @@ ecm_qt_declare_logging_category(kidletime_LIB_SRCS
     EXPORT KIDLETIME
 )
 
-add_library(KF5IdleTime ${kidletime_LIB_SRCS})
 ecm_generate_export_header(KF5IdleTime
     BASE_NAME KIdleTime
     GROUP_BASE_NAME KF
@@ -26,7 +26,6 @@ ecm_generate_export_header(KF5IdleTime
     DEPRECATION_VERSIONS 5.76
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
-add_library(KF5::IdleTime ALIAS KF5IdleTime)
 target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
 
 target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)

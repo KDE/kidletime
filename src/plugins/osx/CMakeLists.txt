@@ -1,8 +1,9 @@
-set(osx_plugin_SRCS
+add_library(KF5IdleTimeOsxPlugin MODULE)
+
+target_sources(KF5IdleTimeOsxPlugin PRIVATE
     macpoller.cpp
 )
 
-add_library(KF5IdleTimeOsxPlugin MODULE ${osx_plugin_SRCS})
 target_link_libraries(KF5IdleTimeOsxPlugin
     KF5IdleTime
     "-framework CoreFoundation -framework Carbon"

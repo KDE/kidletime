@@ -1,8 +1,9 @@
-set(windows_plugin_SRCS
+add_library(KF5IdleTimeWindowsPlugin MODULE)
+
+target_sources(KF5IdleTimeWindowsPlugin PRIVATE
     windowspoller.cpp
 )
 
-add_library(KF5IdleTimeWindowsPlugin MODULE ${windows_plugin_SRCS})
 target_link_libraries(KF5IdleTimeWindowsPlugin
     KF5IdleTime
 )

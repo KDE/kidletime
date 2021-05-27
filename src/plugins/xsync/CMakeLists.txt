@@ -1,11 +1,17 @@
-include_directories( ${XCB_XCB_INCLUDE_DIR} ${XCB_SYNC_INCLUDE_DIR})
+add_library(KF5IdleTimeXcbPlugin0 MODULE)
 
-set(xsync_plugin_SRCS
+target_include_directories(KF5IdleTimeXcbPlugin0
+    PRIVATE
+        ${XCB_XCB_INCLUDE_DIR}
+        ${XCB_SYNC_INCLUDE_DIR}
+)
+
+target_sources(KF5IdleTimeXcbPlugin0 PRIVATE
     xsyncbasedpoller.cpp
     ../../logging.cpp
 )
 
-ecm_qt_declare_logging_category(xsync_plugin_SRCS
+ecm_qt_declare_logging_category(KF5IdleTimeXcbPlugin0
     HEADER xsync_logging.h
     IDENTIFIER KIDLETIME_XSYNC_PLUGIN
     CATEGORY_NAME kf.idletime.xsync
@@ -14,7 +20,6 @@ ecm_qt_declare_logging_category(xsync_plugin_SRCS
     EXPORT KIDLETIME
 )
 
-add_library(KF5IdleTimeXcbPlugin0 MODULE ${xsync_plugin_SRCS})
 target_link_libraries(KF5IdleTimeXcbPlugin0
     KF5IdleTime
     Qt5::X11Extras
