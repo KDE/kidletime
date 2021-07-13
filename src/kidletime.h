@@ -99,7 +99,7 @@ public Q_SLOTS:
 
 #if __has_include(<chrono>)
     /**
-     * Convenience overload suporting C++ chrono types. May also be used with chrono literals.
+     * Convenience overload supporting C++ chrono types. May also be used with chrono literals.
      * @since 5.83
      */
     int addIdleTimeout(std::chrono::milliseconds msec)
