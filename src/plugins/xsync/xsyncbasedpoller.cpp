@@ -113,8 +113,10 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     delete reply;
 #endif
 
-    int sync_major, sync_minor;
-    int old_sync_event, old_sync_error;
+    int sync_major;
+    int sync_minor;
+    int old_sync_event;
+    int old_sync_error;
     if (!XSyncQueryExtension(m_display, &old_sync_event, &old_sync_error)) {
         m_available = false;
         return;
