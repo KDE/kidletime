@@ -170,7 +170,7 @@ int MacPoller::poll()
     int idle = m_secondsIdle * 1000;
 
     // Check if we reached a timeout..
-    for (int i : qAsConst(m_timeouts)) {
+    for (int i : std::as_const(m_timeouts)) {
         if ((i - idle < 1000 && i > idle) || (idle - i < 1000 && idle > i)) {
             // Bingo!
             Q_EMIT timeoutReached(i);

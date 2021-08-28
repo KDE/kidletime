@@ -96,7 +96,7 @@ int WidgetBasedPoller::poll()
     int idle = getIdleTime();
 
     // Check if we reached a timeout..
-    for (int timeOut : qAsConst(m_timeouts)) {
+    for (int timeOut : std::as_const(m_timeouts)) {
         if ((timeOut - idle < 300 && timeOut >= idle) || (idle - timeOut < 300 && idle > timeOut)) {
             // Bingo!
             Q_EMIT timeoutReached(timeOut);
@@ -106,7 +106,7 @@ int WidgetBasedPoller::poll()
     // Let's check the timer now!
     int mintime = 0;
 
-    for (int i : qAsConst(m_timeouts)) {
+    for (int i : std::as_const(m_timeouts)) {
         if (i > idle && (i < mintime || mintime == 0)) {
             mintime = i;
         }
