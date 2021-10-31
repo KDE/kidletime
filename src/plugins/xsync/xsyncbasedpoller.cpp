@@ -1,7 +1,7 @@
 /* This file is part of the KDE libraries
    SPDX-FileCopyrightText: 2009 Dario Freddi <drf at kde.org>
 
-   SPDX-License-Identifier: LGPL-2.0-only
+   SPDX-License-Identifier: LGPL-2.1-or-later
 */
 
 // Exceptionnally, include QCoreApplication before our own header, because that one includes X11 headers (#define None...)

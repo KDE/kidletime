@@ -2,7 +2,7 @@
  * SPDX-FileCopyrightText: 2009 Dario Freddi <drf at kde.org>
  * SPDX-FileCopyrightText: 2021 Harald Sitter <sitter@kde.org>
  *
- * SPDX-License-Identifier: LGPL-2.0-only
+ * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #ifndef KIDLETIME_H
