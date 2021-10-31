@@ -4,7 +4,7 @@
  * SPDX-FileCopyrightText: 2008 Roman Jarosz <kedgedev at centrum.cz>
  * SPDX-FileCopyrightText: 2008 the Kopete developers <kopete-devel at kde.org>
  *
- * SPDX-License-Identifier: LGPL-2.0-only
+ * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #include "macpoller.h"
