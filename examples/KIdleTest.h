@@ -15,7 +15,7 @@ class KIdleTest : public QObject
 
 public:
     KIdleTest();
-    virtual ~KIdleTest();
+    ~KIdleTest() override;
 
 public Q_SLOTS:
     void timeoutReached(int id, int timeout);

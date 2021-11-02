@@ -19,7 +19,7 @@ class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
 
 public:
     AbstractSystemPoller(QObject *parent = nullptr);
-    virtual ~AbstractSystemPoller();
+    ~AbstractSystemPoller() override;
 
     virtual bool isAvailable() = 0;
     virtual bool setUpPoller() = 0;

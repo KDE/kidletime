@@ -24,7 +24,7 @@ public:
         , isActive(false)
     {
     }
-    ~XSyncBasedPollerHelper()
+    ~XSyncBasedPollerHelper() override
     {
         delete q;
     }

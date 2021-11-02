@@ -50,7 +50,7 @@ public:
     /**
      * The destructor
      */
-    virtual ~KIdleTime();
+    ~KIdleTime() override;
 
     /**
      * Retrieves the idle time of the system, in milliseconds
