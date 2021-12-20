@@ -32,7 +32,7 @@ include(KDECMakeSettings)
 include(KDEGitCommitHooks)
 
 set(REQUIRED_QT_VERSION 5.15.2)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
+find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 
 if(APPLE)
     cmake_find_frameworks(CoreFoundation Carbon)
@@ -44,7 +44,11 @@ if(NOT APPLE)
 endif()
 
 if(X11_FOUND)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    if (QT_MAJOR_VERSION STREQUAL "5")
+        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    else()
+        # qtx11extras_p.h is in Qt6Gui, which implied by the Qt6Widgets above
+    endif()
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
     set(HAVE_X11 TRUE)
@@ -65,7 +69,7 @@ if(X11_FOUND)
     add_feature_info("X-Screensaver based poller" HAVE_XSCREENSAVER "KIdleTime fallback mode (libXss)")
 
     if(HAVE_XSCREENSAVER AND NOT WIN32)
-        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+        find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
     endif()
 
     if(NOT HAVE_XSCREENSAVER AND NOT HAVE_XSYNC)
@@ -110,7 +114,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfig.cmake"
 install(EXPORT KF5IdleTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5IdleTimeTargets.cmake NAMESPACE KF5:: )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel)
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF} COMPONENT Devel)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

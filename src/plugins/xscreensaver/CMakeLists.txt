@@ -10,11 +10,17 @@ target_sources(KF5IdleTimeXcbPlugin1 PRIVATE
 
 target_link_libraries(KF5IdleTimeXcbPlugin1
     KF5IdleTime
-    Qt5::DBus
-    Qt5::X11Extras
+    Qt${QT_MAJOR_VERSION}::DBus
     ${X11_LIBRARIES}
     ${X11_Xscreensaver_LIB}
 )
+
+if (TARGET Qt5::X11Extras)
+    target_link_libraries(KF5IdleTimeXcbPlugin1 Qt5::X11Extras)
+elseif (TARGET Qt6::Gui)
+    target_link_libraries(KF5IdleTimeXcbPlugin1 Qt6::GuiPrivate) # qtx11extras_p.h
+endif()
+
 
 install(
     TARGETS

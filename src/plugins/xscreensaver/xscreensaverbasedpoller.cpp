@@ -8,7 +8,11 @@
 
 #include <config-kidletime.h>
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
+#endif
 
 #include <X11/Xlib.h>
 #include <X11/extensions/scrnsaver.h>

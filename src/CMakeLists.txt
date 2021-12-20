@@ -26,10 +26,10 @@ ecm_generate_export_header(KF5IdleTime
     DEPRECATION_VERSIONS 5.76
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
-target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime>")
+target_include_directories(KF5IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime>")
 
-target_link_libraries(KF5IdleTime PUBLIC Qt5::Core)
-target_link_libraries(KF5IdleTime PRIVATE Qt5::Gui)
+target_link_libraries(KF5IdleTime PUBLIC Qt${QT_MAJOR_VERSION}::Core)
+target_link_libraries(KF5IdleTime PRIVATE Qt${QT_MAJOR_VERSION}::Gui)
 
 set_target_properties(KF5IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION}
                                               SOVERSION ${KIDLETIME_SOVERSION}
@@ -49,14 +49,14 @@ ecm_generate_headers(KIdleTime_HEADERS
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
   ${KIdleTime_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime COMPONENT Devel
 )
 
 install(
     FILES
         abstractsystempoller.h
     DESTINATION
-        ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime/private
+        ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime/private
     COMPONENT
         Devel
 )
@@ -94,5 +94,5 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KIdleTime LIB_NAME KF5IdleTime DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KIdleTime)
+ecm_generate_pri_file(BASE_NAME KIdleTime LIB_NAME KF5IdleTime DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

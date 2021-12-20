@@ -22,13 +22,18 @@ ecm_qt_declare_logging_category(KF5IdleTimeXcbPlugin0
 
 target_link_libraries(KF5IdleTimeXcbPlugin0
     KF5IdleTime
-    Qt5::X11Extras
     XCB::XCB
     XCB::SYNC
     X11::XCB
     ${X11_LIBRARIES}
     ${X11_Xext_LIB}
 )
+
+if (TARGET Qt5::X11Extras)
+    target_link_libraries(KF5IdleTimeXcbPlugin0 Qt5::X11Extras)
+elseif (TARGET Qt6::Gui)
+    target_link_libraries(KF5IdleTimeXcbPlugin0 Qt6::GuiPrivate) # qtx11extras_p.h
+endif()
 
 install(
     TARGETS
