@@ -47,7 +47,7 @@ if(X11_FOUND)
     if (QT_MAJOR_VERSION STREQUAL "5")
         find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
     else()
-        # qtx11extras_p.h is in Qt6Gui, which implied by the Qt6Widgets above
+        # qtx11extras_p.h is in Qt6Gui, which implied by the Qt6Gui above
     endif()
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
