@@ -172,7 +172,7 @@ static QStringList pluginCandidates()
     QStringList ret;
     const QStringList libPath = QCoreApplication::libraryPaths();
     for (const QString &path : libPath) {
-        const QDir pluginDir(path + QStringLiteral("kf" QT_STRINGIFY(QT_VERSION_MAJOR)) + QLatin1String("/org.kde.kidletime.platforms"));
+        const QDir pluginDir(path + QStringLiteral("/kf" QT_STRINGIFY(QT_VERSION_MAJOR)) + QLatin1String("/org.kde.kidletime.platforms"));
         if (!pluginDir.exists()) {
             continue;
         }
