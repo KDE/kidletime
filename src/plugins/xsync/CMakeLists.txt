@@ -39,5 +39,5 @@ install(
     TARGETS
         KF5IdleTimeXcbPlugin0
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf5/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
 )
