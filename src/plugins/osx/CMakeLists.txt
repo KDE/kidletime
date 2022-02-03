@@ -13,5 +13,5 @@ install(
     TARGETS
         KF5IdleTimeOsxPlugin
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/kidletime/
 )
