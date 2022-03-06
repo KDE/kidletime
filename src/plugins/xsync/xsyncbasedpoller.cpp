@@ -13,7 +13,7 @@
 
 #include <QAbstractNativeEventFilter>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <private/qtx11extras_p.h>
+#include <QGuiApplication>
 #else
 #include <QX11Info>
 #endif
@@ -62,7 +62,11 @@ XSyncBasedPoller *XSyncBasedPoller::instance()
 
 XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     : AbstractSystemPoller(parent)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    , m_display(qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display())
+#else
     , m_display(QX11Info::display())
+#endif
     , m_xcb_connection(nullptr)
     , m_idleCounter(None)
     , m_resetAlarm(None)

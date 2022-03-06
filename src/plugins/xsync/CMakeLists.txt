@@ -32,7 +32,7 @@ target_link_libraries(KF5IdleTimeXcbPlugin0
 if (TARGET Qt5::X11Extras)
     target_link_libraries(KF5IdleTimeXcbPlugin0 Qt5::X11Extras)
 elseif (TARGET Qt6::Gui)
-    target_link_libraries(KF5IdleTimeXcbPlugin0 Qt6::GuiPrivate) # qtx11extras_p.h
+    target_link_libraries(KF5IdleTimeXcbPlugin0 Qt6::Gui)
 endif()
 
 install(

@@ -9,13 +9,22 @@
 #include <config-kidletime.h>
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <private/qtx11extras_p.h>
+#include <QGuiApplication>
 #else
 #include <QX11Info>
 #endif
 
 #include <X11/Xlib.h>
 #include <X11/extensions/scrnsaver.h>
+
+static Display *display()
+{
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return QX11Info::display();
+#else
+    return qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display();
+#endif
+}
 
 XScreensaverBasedPoller::XScreensaverBasedPoller(QObject *parent)
     : WidgetBasedPoller(parent)
@@ -53,7 +62,7 @@ int XScreensaverBasedPoller::getIdleTime()
 {
     XScreenSaverInfo *mitInfo = nullptr;
     mitInfo = XScreenSaverAllocInfo();
-    XScreenSaverQueryInfo(QX11Info::display(), DefaultRootWindow(QX11Info::display()), mitInfo);
+    XScreenSaverQueryInfo(display(), DefaultRootWindow(display()), mitInfo);
     int ret = mitInfo->idle;
     XFree(mitInfo);
     return ret;
@@ -62,6 +71,6 @@ int XScreensaverBasedPoller::getIdleTime()
 void XScreensaverBasedPoller::simulateUserActivity()
 {
     stopCatchingIdleEvents();
-    XResetScreenSaver(QX11Info::display());
-    XFlush(QX11Info::display());
+    XResetScreenSaver(display());
+    XFlush(display());
 }
