@@ -288,13 +288,13 @@ void KIdleTimePrivate::timeoutReached(int msec)
 {
     Q_Q(KIdleTime);
 
-    for (auto it = associations.cbegin(); it != associations.cend(); ++it) {
-        if (it.value() == msec) {
+    const auto listKeys = associations.keys(msec);
+
+    for (const auto key : listKeys) {
 #if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 76)
-            Q_EMIT q->timeoutReached(it.key());
+        Q_EMIT q->timeoutReached(key);
 #endif
-            Q_EMIT q->timeoutReached(it.key(), msec);
-        }
+        Q_EMIT q->timeoutReached(key, msec);
     }
 }
 
