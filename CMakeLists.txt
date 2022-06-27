@@ -11,7 +11,11 @@ feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKA
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
+include(KDEGitCommitHooks)
 include(CMakeFindFrameworks)
 include(CMakePackageConfigHelpers)
 include(ECMGenerateExportHeader)
@@ -24,12 +28,6 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfigVersion.cmake"
                         SOVERSION 5)
-
-# Dependencies
-include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
-include(KDECMakeSettings)
-include(KDEGitCommitHooks)
 
 set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
