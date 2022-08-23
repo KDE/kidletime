@@ -68,6 +68,7 @@ XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     , m_display(QX11Info::display())
 #endif
     , m_xcb_connection(nullptr)
+    , m_sync_event(0)
     , m_idleCounter(None)
     , m_resetAlarm(None)
     , m_available(true)
