@@ -61,7 +61,7 @@ install(
         Devel
 )
 
-install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5IdleTime EXPORT KF5IdleTimeTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 ecm_qt_install_logging_categories(
