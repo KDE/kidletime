@@ -14,3 +14,7 @@ if(X11_FOUND)
         add_subdirectory(xsync)
     endif()
 endif()
+
+if (Qt5WaylandClient_FOUND)
+    add_subdirectory(wayland)
+endif()
