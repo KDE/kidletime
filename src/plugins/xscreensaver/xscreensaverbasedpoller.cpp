@@ -68,9 +68,11 @@ int XScreensaverBasedPoller::getIdleTime()
     return ret;
 }
 
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
 void XScreensaverBasedPoller::simulateUserActivity()
 {
     stopCatchingIdleEvents();
     XResetScreenSaver(display());
     XFlush(display());
 }
+#endif

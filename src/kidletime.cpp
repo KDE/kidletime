@@ -298,6 +298,7 @@ void KIdleTimePrivate::timeoutReached(int msec)
     }
 }
 
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
 void KIdleTime::simulateUserActivity()
 {
     Q_D(KIdleTime);
@@ -306,6 +307,7 @@ void KIdleTime::simulateUserActivity()
         d->poller.data()->simulateUserActivity();
     }
 }
+#endif
 
 int KIdleTime::idleTime() const
 {

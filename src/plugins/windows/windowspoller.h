@@ -22,7 +22,9 @@ public:
     virtual ~WindowsPoller();
 
 public Q_SLOTS:
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
     void simulateUserActivity();
+#endif
     void catchIdleEvent();
     void stopCatchingIdleEvents();
 
