@@ -81,6 +81,12 @@ if(Qt5WaylandClient_FOUND)
     find_package(QtWaylandScanner REQUIRED)
     find_package(Wayland 1.9 REQUIRED Client)
     find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
+    find_package(WaylandProtocols 1.27)
+    set_package_properties(WaylandProtocols PROPERTIES
+        TYPE REQUIRED
+        PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"
+        URL "https://gitlab.freedesktop.org/wayland/wayland-protocols/"
+    )
 endif()
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")

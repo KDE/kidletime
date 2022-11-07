@@ -10,7 +10,9 @@
 #include <QHash>
 #include <memory>
 
-class IdleManager;
+class IdleManagerKwin;
+class IdleManagerExt;
+
 class IdleTimeout;
 
 class Poller : public AbstractSystemPoller
@@ -42,7 +44,8 @@ private:
     bool initWayland();
     IdleTimeout* createTimeout(int timeout);
 
-    QScopedPointer<IdleManager> m_idleManager;
+    QScopedPointer<IdleManagerKwin> m_idleManagerKwin;
+    QScopedPointer<IdleManagerExt> m_idleManagerExt;
     QHash<int, QSharedPointer<IdleTimeout>> m_timeouts;
     QScopedPointer<IdleTimeout> m_catchResumeTimeout;
 

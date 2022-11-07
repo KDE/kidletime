@@ -13,26 +13,46 @@
 
 #include <qpa/qplatformnativeinterface.h>
 
+#include "qwayland-ext-idle-notify-v1.h"
 #include "qwayland-idle.h"
 
 Q_DECLARE_LOGGING_CATEGORY(POLLER)
 Q_LOGGING_CATEGORY(POLLER, "kf5idletime_wayland")
 
-class IdleTimeout : public QObject, public QtWayland::org_kde_kwin_idle_timeout
+/*
+ * Porting notes:
+ * org_kde_kwin_idle refers to an early specific idle timeout protocol
+ * the version ext_idle refers to an upstream stable protocol
+ *
+ * Pragmattically they're both the same, but we have to have two implementations for a while
+ *
+ * When a suitable amount of time passes (Plasma 5.24 being EOL) drop IdleTimeoutKwin and drop IdleManagerKwin as well as merge the abstract IdleTimeout class into the real implementation
+ */
+
+class IdleTimeout : public QObject
 {
     Q_OBJECT
 public:
-    IdleTimeout(struct ::org_kde_kwin_idle_timeout* object)
-        : QObject()
-        , QtWayland::org_kde_kwin_idle_timeout(object)
-    {}
-
-    ~IdleTimeout() {
-        release();
-    }
+    IdleTimeout() = default;
 Q_SIGNALS:
     void idle();
     void resumeFromIdle();
+};
+
+class IdleTimeoutKwin : public IdleTimeout, public QtWayland::org_kde_kwin_idle_timeout
+{
+    Q_OBJECT
+public:
+    IdleTimeoutKwin(struct ::org_kde_kwin_idle_timeout *object)
+        : IdleTimeout()
+        , QtWayland::org_kde_kwin_idle_timeout(object)
+    {}
+
+    ~IdleTimeoutKwin()
+    {
+        release();
+    }
+
 protected:
     void org_kde_kwin_idle_timeout_idle() override {
         Q_EMIT idle();
@@ -42,11 +62,37 @@ protected:
     }
 };
 
-class IdleManager : public QWaylandClientExtensionTemplate<IdleManager>, public QtWayland::org_kde_kwin_idle
+class IdleTimeoutExt : public IdleTimeout, public QtWayland::ext_idle_notification_v1
+{
+    Q_OBJECT
+public:
+    IdleTimeoutExt(struct ::ext_idle_notification_v1 *object)
+        : IdleTimeout()
+        , QtWayland::ext_idle_notification_v1(object)
+    {
+    }
+
+    ~IdleTimeoutExt()
+    {
+        destroy();
+    }
+
+protected:
+    void ext_idle_notification_v1_idled() override
+    {
+        Q_EMIT idle();
+    }
+    void ext_idle_notification_v1_resumed() override
+    {
+        Q_EMIT resumeFromIdle();
+    }
+};
+
+class IdleManagerKwin : public QWaylandClientExtensionTemplate<IdleManagerKwin>, public QtWayland::org_kde_kwin_idle
 {
 public:
-    IdleManager()
-        : QWaylandClientExtensionTemplate<IdleManager>(1)
+    IdleManagerKwin()
+        : QWaylandClientExtensionTemplate<IdleManagerKwin>(1)
     {
 #if QTWAYLANDCLIENT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
         initialize();
@@ -58,18 +104,38 @@ public:
     }
 };
 
+class IdleManagerExt : public QWaylandClientExtensionTemplate<IdleManagerExt>, public QtWayland::ext_idle_notifier_v1
+{
+public:
+    IdleManagerExt()
+        : QWaylandClientExtensionTemplate<IdleManagerExt>(1)
+    {
+#if QTWAYLANDCLIENT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+        initialize();
+#else
+        // QWaylandClientExtensionTemplate invokes this with a QueuedConnection but we want shortcuts
+        // to be inhibited immediately.
+        QMetaObject::invokeMethod(this, "addRegistryListener");
+#endif
+    }
+    ~IdleManagerExt()
+    {
+        destroy();
+    }
+};
+
 Poller::Poller(QObject *parent)
     : AbstractSystemPoller(parent)
-    , m_idleManager(new IdleManager)
+    , m_idleManagerKwin(new IdleManagerKwin)
+    , m_idleManagerExt(new IdleManagerExt)
 {
-
 }
 
 Poller::~Poller() = default;
 
 bool Poller::isAvailable()
 {
-    return m_idleManager->isActive();
+    return m_idleManagerKwin->isActive() || m_idleManagerExt->isActive();
 }
 
 void Poller::addTimeout(int nextTimeout)
@@ -133,19 +199,10 @@ int Poller::forcePollRequest()
 
 void Poller::simulateUserActivity()
 {
-    // the timeout value doesn't matter as we're just calling one method on it then deleting
-    QScopedPointer<IdleTimeout> timeout(createTimeout(UINT_MAX));
-    if (timeout) {
-        timeout->simulate_user_activity();
-    }
 }
 
 IdleTimeout* Poller::createTimeout(int timeout)
 {
-    if (!isAvailable()) {
-        return nullptr;
-    }
-
     QPlatformNativeInterface *nativeInterface = qGuiApp->platformNativeInterface();
     if (!nativeInterface) {
         return nullptr;
@@ -155,9 +212,13 @@ IdleTimeout* Poller::createTimeout(int timeout)
         return nullptr;
     }
 
-    return new IdleTimeout(m_idleManager->get_idle_timeout(seat, timeout));
+    if (m_idleManagerExt->isActive()) {
+        return new IdleTimeoutExt(m_idleManagerExt->get_idle_notification(timeout, seat));
+    }
+    if (m_idleManagerKwin->isActive()) {
+        return new IdleTimeoutKwin(m_idleManagerKwin->get_idle_timeout(seat, timeout));
+    }
+    return nullptr;
 }
-
-
 
 #include "poller.moc"
