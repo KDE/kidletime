@@ -52,9 +52,11 @@ void KIdleTest::timeoutReached(int id, int timeout)
     } else if (timeout == 10000) {
         KIdleTime::instance()->catchNextResumeEvent();
         printf("Cool. You can move your mouse to start over\n");
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
     } else if (timeout == 25000) {
         printf("Uff, you're annoying me. Let's start again. I'm simulating your activity now\n");
         KIdleTime::instance()->simulateUserActivity();
+#endif
     } else {
         qDebug() << "OUCH";
     }
