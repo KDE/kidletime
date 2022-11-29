@@ -298,7 +298,7 @@ void KIdleTimePrivate::timeoutReached(int msec)
     }
 }
 
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
 void KIdleTime::simulateUserActivity()
 {
     Q_D(KIdleTime);

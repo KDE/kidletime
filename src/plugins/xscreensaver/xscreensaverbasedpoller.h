@@ -21,7 +21,7 @@ public:
     explicit XScreensaverBasedPoller(QObject *parent = nullptr);
     ~XScreensaverBasedPoller() override;
 
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
 public Q_SLOTS:
     void simulateUserActivity() override;
 #endif

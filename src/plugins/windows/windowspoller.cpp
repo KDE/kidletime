@@ -47,7 +47,7 @@ bool WindowsPoller::additionalSetUp()
     return true;
 }
 
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 100)
+#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
 void WindowsPoller::simulateUserActivity()
 {
     int width = GetSystemMetrics(SM_CXSCREEN);
