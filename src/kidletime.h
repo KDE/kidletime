@@ -76,6 +76,7 @@ public:
      * will be triggered
      *
      * @see resumingFromIdle
+     * @deprecated Since 5.101. No known users and not available on every platform.
      */
     KIDLETIME_DEPRECATED_VERSION(5, 101, "No known users and not available on every platform")
     void simulateUserActivity();
