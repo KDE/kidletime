@@ -209,9 +209,7 @@ void MacPoller::triggerResume()
     }
 }
 
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
 void MacPoller::simulateUserActivity()
 {
     // TODO
 }
-#endif

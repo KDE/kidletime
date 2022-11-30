@@ -341,10 +341,8 @@ void XSyncBasedPoller::setAlarm(Display *dpy, XSyncAlarm *alarm, XSyncCounter co
     XFlush(m_display);
 }
 
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
 void XSyncBasedPoller::simulateUserActivity()
 {
     XResetScreenSaver(m_display);
     XFlush(m_display);
 }
-#endif

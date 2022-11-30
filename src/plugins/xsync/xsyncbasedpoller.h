@@ -45,9 +45,7 @@ public Q_SLOTS:
     int forcePollRequest() override;
     void catchIdleEvent() override;
     void stopCatchingIdleEvents() override;
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
     void simulateUserActivity() override;
-#endif
 
 private Q_SLOTS:
     int poll();

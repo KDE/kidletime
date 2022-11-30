@@ -35,9 +35,7 @@ public Q_SLOTS:
     virtual int forcePollRequest() = 0;
     virtual void catchIdleEvent() = 0;
     virtual void stopCatchingIdleEvents() = 0;
-#if KIDLETIME_BUILD_DEPRECATED_SINCE(5, 101)
     virtual void simulateUserActivity() = 0;
-#endif
 
 Q_SIGNALS:
     void resumingFromIdle();

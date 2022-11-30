@@ -69,18 +69,14 @@ public:
      */
     QHash<int, int> idleTimeouts() const;
 
-#if KIDLETIME_ENABLE_DEPRECATED_SINCE(5, 101)
     /**
      * Attempts to simulate user activity. This implies that after calling this
      * method, the idle time of the system will become 0 and eventually \link resumingFromIdle \endlink
      * will be triggered
      *
      * @see resumingFromIdle
-     * @deprecated Since 5.101. No known users and not available on every platform.
      */
-    KIDLETIME_DEPRECATED_VERSION(5, 101, "No known users and not available on every platform")
     void simulateUserActivity();
-#endif
 
 public Q_SLOTS:
     /**
