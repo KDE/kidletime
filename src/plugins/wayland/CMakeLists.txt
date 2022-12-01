@@ -7,7 +7,6 @@ target_sources(KF6IdleTimeWaylandPlugin PRIVATE poller.cpp ${idletime_plugin_SRC
 target_link_libraries(KF6IdleTimeWaylandPlugin
     KF6::IdleTime
     Qt6::WaylandClient
-    Qt6::GuiPrivate
     Wayland::Client
 )
 

@@ -11,8 +11,6 @@
 #include <QWaylandClientExtensionTemplate>
 #include <QtWaylandClientVersion>
 
-#include <qpa/qplatformnativeinterface.h>
-
 #include "qwayland-ext-idle-notify-v1.h"
 #include "qwayland-idle.h"
 
@@ -197,11 +195,12 @@ void Poller::simulateUserActivity()
 
 IdleTimeout* Poller::createTimeout(int timeout)
 {
-    QPlatformNativeInterface *nativeInterface = qGuiApp->platformNativeInterface();
-    if (!nativeInterface) {
+    auto waylandApp = qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>();
+    if (!waylandApp) {
         return nullptr;
     }
-    auto seat = static_cast<wl_seat *>(nativeInterface->nativeResourceForIntegration("wl_seat"));
+    auto seat = waylandApp->seat();
+
     if (!seat) {
         return nullptr;
     }
