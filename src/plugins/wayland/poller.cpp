@@ -120,7 +120,9 @@ public:
     }
     ~IdleManagerExt()
     {
-        destroy();
+        if (isActive()) {
+            destroy();
+        }
     }
 };
 
