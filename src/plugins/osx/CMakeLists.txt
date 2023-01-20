@@ -1,17 +1,17 @@
-add_library(KF5IdleTimeOsxPlugin MODULE)
+add_library(KF6IdleTimeOsxPlugin MODULE)
 
-target_sources(KF5IdleTimeOsxPlugin PRIVATE
+target_sources(KF6IdleTimeOsxPlugin PRIVATE
     macpoller.cpp
 )
 
-target_link_libraries(KF5IdleTimeOsxPlugin
-    KF5IdleTime
+target_link_libraries(KF6IdleTimeOsxPlugin
+    KF6IdleTime
     "-framework CoreFoundation -framework Carbon"
 )
 
 install(
     TARGETS
-        KF5IdleTimeOsxPlugin
+        KF6IdleTimeOsxPlugin
     DESTINATION
         ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/kidletime/
 )

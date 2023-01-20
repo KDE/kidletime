@@ -12,8 +12,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: KIdleTime
-   cmake: "KF5::IdleTime"
-cmakename: KF5IdleTime
+   cmake: "KF6::IdleTime"
+cmakename: KF6IdleTime
 
 public_lib: true
 group: Frameworks

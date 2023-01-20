@@ -27,8 +27,8 @@ include(ECMAddQch)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfigVersion.cmake"
-                        SOVERSION 5)
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfigVersion.cmake"
+                        SOVERSION 6)
 
 set(REQUIRED_QT_VERSION 6.4.0)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
@@ -104,29 +104,29 @@ add_subdirectory(src)
 add_subdirectory(examples)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5IdleTime")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6IdleTime")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5IdleTime_QCH
-        FILE KF5IdleTimeQchTargets.cmake
+        TARGETS KF6IdleTime_QCH
+        FILE KF6IdleTimeQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5IdleTimeQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6IdleTimeQchTargets.cmake\")")
 endif()
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5IdleTimeConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfig.cmake"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6IdleTimeConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KF5IdleTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5IdleTimeTargets.cmake NAMESPACE KF5:: )
+install(EXPORT KF6IdleTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6IdleTimeTargets.cmake NAMESPACE KF6:: )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h
         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime COMPONENT Devel)

@@ -1,16 +1,16 @@
-add_library(KF5IdleTimeWindowsPlugin MODULE)
+add_library(KF6IdleTimeWindowsPlugin MODULE)
 
-target_sources(KF5IdleTimeWindowsPlugin PRIVATE
+target_sources(KF6IdleTimeWindowsPlugin PRIVATE
     windowspoller.cpp
 )
 
-target_link_libraries(KF5IdleTimeWindowsPlugin
-    KF5IdleTime
+target_link_libraries(KF6IdleTimeWindowsPlugin
+    KF6IdleTime
 )
 
 install(
     TARGETS
-        KF5IdleTimeWindowsPlugin
+        KF6IdleTimeWindowsPlugin
     DESTINATION
         ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
 )
