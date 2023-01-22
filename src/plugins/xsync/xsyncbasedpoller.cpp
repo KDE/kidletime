@@ -12,11 +12,7 @@
 #include "xsyncbasedpoller.h"
 
 #include <QAbstractNativeEventFilter>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QGuiApplication>
-#else
-#include <QX11Info>
-#endif
 
 #include <X11/Xlib-xcb.h> // XGetXCBConnection
 #include <xcb/sync.h>
@@ -33,11 +29,7 @@ public:
     {
         delete q;
     }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override
-#else
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override
-#endif
     {
         Q_UNUSED(result);
         if (isActive && eventType == "xcb_generic_event_t") {
@@ -62,11 +54,7 @@ XSyncBasedPoller *XSyncBasedPoller::instance()
 
 XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
     : AbstractSystemPoller(parent)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     , m_display(qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display())
-#else
-    , m_display(QX11Info::display())
-#endif
     , m_xcb_connection(nullptr)
     , m_sync_event(0)
     , m_idleCounter(None)

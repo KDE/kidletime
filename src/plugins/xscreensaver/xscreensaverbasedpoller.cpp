@@ -8,22 +8,14 @@
 
 #include <config-kidletime.h>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QGuiApplication>
-#else
-#include <QX11Info>
-#endif
 
 #include <X11/Xlib.h>
 #include <X11/extensions/scrnsaver.h>
 
 static Display *display()
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    return QX11Info::display();
-#else
     return qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display();
-#endif
 }
 
 XScreensaverBasedPoller::XScreensaverBasedPoller(QObject *parent)

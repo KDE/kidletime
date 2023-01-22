@@ -165,24 +165,6 @@ Q_SIGNALS:
      */
     void resumingFromIdle();
 
-#if KIDLETIME_ENABLE_DEPRECATED_SINCE(5, 76)
-    /**
-     * Triggered when the system has been idle for x milliseconds, identified by the previously set
-     * timeout.
-     * <p>
-     * This signal is triggered whenever each timeout previously registered with \link addIdleTimeout \endlink
-     * is reached.
-     *
-     * @param identifier the identifier of the timeout the system has reached
-     *
-     * @see addIdleTimeout
-     * @see removeIdleTimeout
-     * @deprecated Since 5.76, use only timeoutReached(int identifier, int msec)
-     */
-    KIDLETIME_DEPRECATED_VERSION(5, 76, "Use only timeoutReached(int identifier, int msec)")
-    void timeoutReached(int identifier); // clazy:exclude=overloaded-signal
-#endif
-
     /**
      * Triggered when the system has been idle for x milliseconds, identified by the previously set
      * timeout.

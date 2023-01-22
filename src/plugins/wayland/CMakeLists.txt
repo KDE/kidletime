@@ -1,24 +1,13 @@
 add_library(KF6IdleTimeWaylandPlugin MODULE)
-if (QT_MAJOR_VERSION EQUAL "5")
-    ecm_add_qtwayland_client_protocol(idletime_plugin_SRCS
-        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/idle.xml
-        BASENAME idle
-    )
-    ecm_add_qtwayland_client_protocol(idletime_plugin_SRCS
-        PROTOCOL ${WaylandProtocols_DATADIR}/staging/ext-idle-notify/ext-idle-notify-v1.xml
-        BASENAME ext-idle-notify-v1
-    )
-else()
-    qt6_generate_wayland_protocol_client_sources(KF6IdleTimeWaylandPlugin FILES
-        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/idle.xml
-        ${WAYLAND_PROTOCOLS_DIR}/ext-idle-notify-v1.xml)
-endif()
+qt6_generate_wayland_protocol_client_sources(KF6IdleTimeWaylandPlugin FILES
+    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/idle.xml
+    ${WaylandProtocols_DATADIR}/staging/ext-idle-notify/ext-idle-notify-v1.xml)
 target_sources(KF6IdleTimeWaylandPlugin PRIVATE poller.cpp ${idletime_plugin_SRCS})
 
 target_link_libraries(KF6IdleTimeWaylandPlugin
     KF6::IdleTime
-    Qt${QT_MAJOR_VERSION}::WaylandClient
-    Qt${QT_MAJOR_VERSION}::GuiPrivate
+    Qt6::WaylandClient
+    Qt6::GuiPrivate
     Wayland::Client
 )
 

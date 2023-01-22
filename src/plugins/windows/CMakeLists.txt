@@ -12,5 +12,5 @@ install(
     TARGETS
         KF6IdleTimeWindowsPlugin
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf6/org.kde.kidletime.platforms/
 )

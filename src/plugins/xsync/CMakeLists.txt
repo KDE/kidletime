@@ -22,6 +22,7 @@ ecm_qt_declare_logging_category(KF6IdleTimeXcbPlugin0
 
 target_link_libraries(KF6IdleTimeXcbPlugin0
     KF6IdleTime
+    Qt6::Gui
     XCB::XCB
     XCB::SYNC
     X11::XCB
@@ -29,15 +30,9 @@ target_link_libraries(KF6IdleTimeXcbPlugin0
     ${X11_Xext_LIB}
 )
 
-if (TARGET Qt5::X11Extras)
-    target_link_libraries(KF6IdleTimeXcbPlugin0 Qt5::X11Extras)
-elseif (TARGET Qt6::Gui)
-    target_link_libraries(KF6IdleTimeXcbPlugin0 Qt6::Gui)
-endif()
-
 install(
     TARGETS
         KF6IdleTimeXcbPlugin0
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf6/org.kde.kidletime.platforms/
 )

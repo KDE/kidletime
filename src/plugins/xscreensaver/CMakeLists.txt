@@ -10,21 +10,15 @@ target_sources(KF6IdleTimeXcbPlugin1 PRIVATE
 
 target_link_libraries(KF6IdleTimeXcbPlugin1
     KF6IdleTime
-    Qt${QT_MAJOR_VERSION}::DBus
+    Qt6::DBus
+    Qt6::Gui
     ${X11_LIBRARIES}
     ${X11_Xscreensaver_LIB}
 )
-
-if (TARGET Qt5::X11Extras)
-    target_link_libraries(KF6IdleTimeXcbPlugin1 Qt5::X11Extras)
-elseif (TARGET Qt6::Gui)
-    target_link_libraries(KF6IdleTimeXcbPlugin1 Qt6::Gui)
-endif()
-
 
 install(
     TARGETS
         KF6IdleTimeXcbPlugin1
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf6/org.kde.kidletime.platforms/
 )

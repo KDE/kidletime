@@ -23,13 +23,13 @@ ecm_generate_export_header(KF6IdleTime
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
-    DEPRECATION_VERSIONS 5.76
+    DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 target_include_directories(KF6IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime>")
 
-target_link_libraries(KF6IdleTime PUBLIC Qt${QT_MAJOR_VERSION}::Core)
-target_link_libraries(KF6IdleTime PRIVATE Qt${QT_MAJOR_VERSION}::Gui)
+target_link_libraries(KF6IdleTime PUBLIC Qt6::Core)
+target_link_libraries(KF6IdleTime PRIVATE Qt6::Gui)
 
 set_target_properties(KF6IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION}
                                               SOVERSION ${KIDLETIME_SOVERSION}
@@ -81,7 +81,7 @@ if(BUILD_QCH)
             ${KIdleTime_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Core_QCH
+            Qt6Core_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

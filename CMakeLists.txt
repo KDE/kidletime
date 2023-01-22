@@ -31,7 +31,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         SOVERSION 6)
 
 set(REQUIRED_QT_VERSION 6.4.0)
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 
 if(APPLE)
     cmake_find_frameworks(CoreFoundation Carbon)
@@ -40,13 +40,10 @@ endif()
 if(NOT APPLE)
     find_package(X11)
     find_package(XCB COMPONENTS XCB)
-    find_package(Qt${QT_MAJOR_VERSION}WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
+    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
 endif()
 
 if(X11_FOUND)
-    if (QT_MAJOR_VERSION STREQUAL "5")
-        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
-    endif()
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
     set(HAVE_X11 TRUE)
@@ -67,7 +64,7 @@ if(X11_FOUND)
     add_feature_info("X-Screensaver based poller" HAVE_XSCREENSAVER "KIdleTime fallback mode (libXss)")
 
     if(HAVE_XSCREENSAVER AND NOT WIN32)
-        find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+        find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
     endif()
 
     if(NOT HAVE_XSCREENSAVER AND NOT HAVE_XSYNC)
@@ -77,8 +74,7 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 
-if(Qt5WaylandClient_FOUND)
-    find_package(QtWaylandScanner REQUIRED)
+if(TARGET Qt6::WaylandClient)
     find_package(Wayland 1.9 REQUIRED Client)
     find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
     find_package(WaylandProtocols 1.27)
@@ -95,8 +91,8 @@ option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, 
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
-    KF 5.97
+    QT 6.4
+    KF 5.102
 )
 
 # Subdirectories
