@@ -15,5 +15,5 @@ install(
     TARGETS
         KF6IdleTimeWaylandPlugin
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf5/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf6/org.kde.kidletime.platforms/
 )
