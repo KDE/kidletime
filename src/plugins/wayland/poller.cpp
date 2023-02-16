@@ -50,7 +50,9 @@ public:
 
     ~IdleTimeoutKwin()
     {
-        release();
+        if (qGuiApp) {
+            release();
+        }
     }
 
 protected:
@@ -74,7 +76,9 @@ public:
 
     ~IdleTimeoutExt()
     {
-        destroy();
+        if (qGuiApp) {
+            destroy();
+        }
     }
 
 protected:
@@ -120,7 +124,7 @@ public:
     }
     ~IdleManagerExt()
     {
-        if (isActive()) {
+        if (qGuiApp && isActive()) {
             destroy();
         }
     }
