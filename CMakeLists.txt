@@ -34,20 +34,24 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
 set(REQUIRED_QT_VERSION 6.4.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 
+option(WITH_X11 "Build X11 support" ON)
+option(WITH_WAYLAND "BUILD Wayland support" ON)
+
+if(APPLE OR WIN32)
+    set(WITH_X11 OFF)
+    set(WITH_WAYLAND OFF)
+endif()
+
 if(APPLE)
     cmake_find_frameworks(CoreFoundation Carbon)
 endif()
 
-if(NOT APPLE)
-    find_package(X11)
-    find_package(XCB COMPONENTS XCB)
-    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
-endif()
-
-if(X11_FOUND)
-    find_package(XCB COMPONENTS XCB SYNC)
-    find_package(X11_XCB)
+if(WITH_X11)
+    find_package(X11 REQUIRED)
+    find_package(XCB REQUIRED COMPONENTS XCB SYNC)
+    find_package(X11_XCB REQUIRED)
     set(HAVE_X11 TRUE)
+
     if (X11_XSync_FOUND AND XCB_XCB_FOUND AND X11_XCB_FOUND AND XCB_SYNC_FOUND)
         # One cannot just use "set(HAVE_XSYNC X11_XSync_FOUND AND XCB_XCB_FOUND...)"
         # Doing so would create a list because the value passed to set() is not evaluated.
@@ -64,7 +68,7 @@ if(X11_FOUND)
     set(HAVE_XSCREENSAVER ${X11_Xscreensaver_FOUND})
     add_feature_info("X-Screensaver based poller" HAVE_XSCREENSAVER "KIdleTime fallback mode (libXss)")
 
-    if(HAVE_XSCREENSAVER AND NOT WIN32)
+    if(HAVE_XSCREENSAVER)
         find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
     endif()
 
@@ -75,7 +79,9 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 
-if(TARGET Qt6::WaylandClient)
+if(WITH_WAYLAND)
+    find_package(Qt6Gui REQUIRED CONFIG COMPONENTS Private)
+    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} REQUIRED CONFIG)
     find_package(Wayland 1.9 REQUIRED Client)
     find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
     find_package(WaylandProtocols 1.27)
