@@ -31,6 +31,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         SOVERSION 6)
 
 set(REQUIRED_QT_VERSION 6.4.0)
+
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 
 if(APPLE)
@@ -40,8 +41,25 @@ endif()
 if(NOT APPLE)
     find_package(X11)
     find_package(XCB COMPONENTS XCB)
-    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
 endif()
+if(UNIX AND NOT APPLE AND NOT ANDROID)
+    option(WITH_WAYLAND "Build with Wayland support" ON)
+    add_feature_info(Wayland ${WITH_WAYLAND} "Wayland support")
+endif()
+
+if(WITH_WAYLAND)
+    find_package(Qt6Gui ${REQUIRED_QT_VERSION}  CONFIG REQUIRED COMPONENTS Private)
+    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
+    find_package(Wayland 1.9 REQUIRED Client)
+    find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
+    find_package(WaylandProtocols 1.27)
+    set_package_properties(WaylandProtocols PROPERTIES
+        TYPE REQUIRED
+        PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"
+        URL "https://gitlab.freedesktop.org/wayland/wayland-protocols/"
+    )
+endif()
+
 
 if(X11_FOUND)
     find_package(XCB COMPONENTS XCB SYNC)
@@ -72,17 +90,6 @@ if(X11_FOUND)
     endif()
 else()
     set(HAVE_X11 FALSE)
-endif()
-
-if(TARGET Qt6::WaylandClient)
-    find_package(Wayland 1.9 REQUIRED Client)
-    find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
-    find_package(WaylandProtocols 1.27)
-    set_package_properties(WaylandProtocols PROPERTIES
-        TYPE REQUIRED
-        PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"
-        URL "https://gitlab.freedesktop.org/wayland/wayland-protocols/"
-    )
 endif()
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")

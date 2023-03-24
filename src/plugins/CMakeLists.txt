@@ -15,6 +15,6 @@ if(X11_FOUND)
     endif()
 endif()
 
-if (TARGET Qt6::WaylandClient)
+if (WITH_WAYLAND)
     add_subdirectory(wayland)
 endif()
