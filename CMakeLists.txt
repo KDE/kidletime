@@ -49,7 +49,7 @@ endif()
 
 if(WITH_WAYLAND)
     find_package(Qt6Gui ${REQUIRED_QT_VERSION}  CONFIG REQUIRED COMPONENTS Private)
-    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
+    find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} CONFIG REQUIRED)
     find_package(Wayland 1.9 REQUIRED Client)
     find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
     find_package(WaylandProtocols 1.27)
