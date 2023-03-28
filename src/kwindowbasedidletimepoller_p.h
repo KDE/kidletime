@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#ifndef WIDGETBASEDPOLLER_H
-#define WIDGETBASEDPOLLER_H
+#ifndef KWINDOWBASEDIDLETIMEPOLLER_P_H
+#define KWINDOWBASEDIDLETIMEPOLLER_P_H
 
 #include <kidletime_export.h>
 
@@ -15,13 +15,13 @@ class QTimer;
 class QEvent;
 class QWindow;
 
-class KIDLETIME_EXPORT WidgetBasedPoller : public KAbstractIdleTimePoller
+class KIDLETIME_EXPORT KWindowBasedIdleTimePoller : public KAbstractIdleTimePoller
 {
     Q_OBJECT
 
 public:
-    explicit WidgetBasedPoller(QObject *parent = nullptr);
-    ~WidgetBasedPoller() override;
+    explicit KWindowBasedIdleTimePoller(QObject *parent = nullptr);
+    ~KWindowBasedIdleTimePoller() override;
 
     bool isAvailable() override;
     bool setUpPoller() override;
@@ -56,4 +56,4 @@ private:
     QList<int> m_timeouts;
 };
 
-#endif /* WIDGETBASEDPOLLER_H */
+#endif /* KWINDOWBASEDIDLETIMEPOLLER_P_H */

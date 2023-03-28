@@ -7,11 +7,11 @@
 #ifndef WINDOWSPOLLER_H
 #define WINDOWSPOLLER_H
 
-#include "widgetbasedpoller.h"
+#include "kwindowbasedidletimepoller_p.h"
 
 class QTimer;
 
-class WindowsPoller : public WidgetBasedPoller
+class WindowsPoller : public KWindowBasedIdleTimePoller
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "windows.json")

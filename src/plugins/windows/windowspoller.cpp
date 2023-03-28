@@ -11,7 +11,7 @@
 #include <QTimer>
 
 WindowsPoller::WindowsPoller(QObject *parent)
-    : WidgetBasedPoller(parent)
+    : KWindowBasedIdleTimePoller(parent)
 {
 }
 

@@ -4,32 +4,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#include "widgetbasedpoller.h"
+#include "kwindowbasedidletimepoller_p.h"
 
 #include <QEvent>
 #include <QTimer>
 #include <QWindow>
 
-WidgetBasedPoller::WidgetBasedPoller(QObject *parent)
+KWindowBasedIdleTimePoller::KWindowBasedIdleTimePoller(QObject *parent)
     : KAbstractIdleTimePoller(parent)
 {
 }
 
-WidgetBasedPoller::~WidgetBasedPoller()
+KWindowBasedIdleTimePoller::~KWindowBasedIdleTimePoller()
 {
 }
 
-bool WidgetBasedPoller::isAvailable()
+bool KWindowBasedIdleTimePoller::isAvailable()
 {
     return true;
 }
 
-bool WidgetBasedPoller::setUpPoller()
+bool KWindowBasedIdleTimePoller::setUpPoller()
 {
     m_pollTimer = new QTimer(this);
 
     // setup idle timer, with some smart polling
-    connect(m_pollTimer, &QTimer::timeout, this, &WidgetBasedPoller::poll);
+    connect(m_pollTimer, &QTimer::timeout, this, &KWindowBasedIdleTimePoller::poll);
 
     m_grabber = new QWindow();
     m_grabber->setFlag(Qt::X11BypassWindowManagerHint);
@@ -40,24 +40,24 @@ bool WidgetBasedPoller::setUpPoller()
     return additionalSetUp();
 }
 
-void WidgetBasedPoller::unloadPoller()
+void KWindowBasedIdleTimePoller::unloadPoller()
 {
     m_pollTimer->deleteLater();
     m_grabber->deleteLater();
 }
 
-QList<int> WidgetBasedPoller::timeouts() const
+QList<int> KWindowBasedIdleTimePoller::timeouts() const
 {
     return m_timeouts;
 }
 
-void WidgetBasedPoller::addTimeout(int nextTimeout)
+void KWindowBasedIdleTimePoller::addTimeout(int nextTimeout)
 {
     m_timeouts.append(nextTimeout);
     poll();
 }
 
-bool WidgetBasedPoller::eventFilter(QObject *object, QEvent *event)
+bool KWindowBasedIdleTimePoller::eventFilter(QObject *object, QEvent *event)
 {
     if (object == m_grabber && (event->type() == QEvent::MouseMove || event->type() == QEvent::KeyPress)) {
         detectedActivity();
@@ -71,27 +71,27 @@ bool WidgetBasedPoller::eventFilter(QObject *object, QEvent *event)
     return false;
 }
 
-void WidgetBasedPoller::waitForActivity()
+void KWindowBasedIdleTimePoller::waitForActivity()
 {
     m_grabber->show();
     m_grabber->setMouseGrabEnabled(true);
     m_grabber->setKeyboardGrabEnabled(true);
 }
 
-void WidgetBasedPoller::detectedActivity()
+void KWindowBasedIdleTimePoller::detectedActivity()
 {
     stopCatchingIdleEvents();
     Q_EMIT resumingFromIdle();
 }
 
-void WidgetBasedPoller::releaseInputLock()
+void KWindowBasedIdleTimePoller::releaseInputLock()
 {
     m_grabber->setMouseGrabEnabled(false);
     m_grabber->setKeyboardGrabEnabled(false);
     m_grabber->hide();
 }
 
-int WidgetBasedPoller::poll()
+int KWindowBasedIdleTimePoller::poll()
 {
     int idle = getIdleTime();
 
@@ -123,23 +123,23 @@ int WidgetBasedPoller::poll()
     return idle;
 }
 
-int WidgetBasedPoller::forcePollRequest()
+int KWindowBasedIdleTimePoller::forcePollRequest()
 {
     return poll();
 }
 
-void WidgetBasedPoller::removeTimeout(int timeout)
+void KWindowBasedIdleTimePoller::removeTimeout(int timeout)
 {
     m_timeouts.removeOne(timeout);
     poll();
 }
 
-void WidgetBasedPoller::catchIdleEvent()
+void KWindowBasedIdleTimePoller::catchIdleEvent()
 {
     waitForActivity();
 }
 
-void WidgetBasedPoller::stopCatchingIdleEvents()
+void KWindowBasedIdleTimePoller::stopCatchingIdleEvents()
 {
     releaseInputLock();
 }

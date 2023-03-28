@@ -7,11 +7,11 @@
 #ifndef XSCREENSAVERBASEDPOLLER_H
 #define XSCREENSAVERBASEDPOLLER_H
 
-#include "widgetbasedpoller.h"
+#include "kwindowbasedidletimepoller_p.h"
 
 #include "screensaver_interface.h"
 
-class XScreensaverBasedPoller : public WidgetBasedPoller
+class XScreensaverBasedPoller : public KWindowBasedIdleTimePoller
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "xcb.json")

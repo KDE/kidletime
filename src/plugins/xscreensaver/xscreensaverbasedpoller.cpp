@@ -19,7 +19,7 @@ static Display *display()
 }
 
 XScreensaverBasedPoller::XScreensaverBasedPoller(QObject *parent)
-    : WidgetBasedPoller(parent)
+    : KWindowBasedIdleTimePoller(parent)
     , m_screenSaverIface(nullptr)
 {
 }

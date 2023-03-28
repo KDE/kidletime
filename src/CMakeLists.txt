@@ -6,7 +6,7 @@ add_library(KF6::IdleTime ALIAS KF6IdleTime)
 target_sources(KF6IdleTime PRIVATE
     kidletime.cpp
     kabstractidletimepoller.cpp
-    widgetbasedpoller.cpp # TODO it doesn't actually use widgets, just GUI. Rename?
+    kwindowbasedidletimepoller.cpp
 )
 
 ecm_qt_declare_logging_category(KF6IdleTime
