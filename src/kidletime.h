@@ -199,7 +199,7 @@ Q_SIGNALS:
     void timeoutReached(int identifier, int msec); // clazy:exclude=overloaded-signal
 
 private:
-    KIdleTime();
+    KIDLETIME_NO_EXPORT KIdleTime();
 
     std::unique_ptr<KIdleTimePrivate> const d_ptr;
 };
