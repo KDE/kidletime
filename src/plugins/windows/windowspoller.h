@@ -14,8 +14,8 @@ class QTimer;
 class WindowsPoller : public WidgetBasedPoller
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "windows.json")
-    Q_INTERFACES(AbstractSystemPoller)
+    Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "windows.json")
+    Q_INTERFACES(KAbstractIdleTimePoller)
 
 public:
     WindowsPoller(QObject *parent = 0);

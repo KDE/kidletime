@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 
-AbstractSystemPoller::AbstractSystemPoller(QObject *parent)
+KAbstractIdleTimePoller::KAbstractIdleTimePoller(QObject *parent)
     : QObject(parent)
 {
 }
 
-AbstractSystemPoller::~AbstractSystemPoller()
+KAbstractIdleTimePoller::~KAbstractIdleTimePoller()
 {
 }

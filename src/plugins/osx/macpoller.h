@@ -7,15 +7,15 @@
 #ifndef MACPOLLER_H
 #define MACPOLLER_H
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 
 #include <Carbon/Carbon.h>
 
-class MacPoller : public AbstractSystemPoller
+class MacPoller : public KAbstractIdleTimePoller
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "osx.json")
-    Q_INTERFACES(AbstractSystemPoller)
+    Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "osx.json")
+    Q_INTERFACES(KAbstractIdleTimePoller)
 
 public:
     MacPoller(QObject *parent = 0);

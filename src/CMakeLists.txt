@@ -5,7 +5,7 @@ add_library(KF6::IdleTime ALIAS KF6IdleTime)
 
 target_sources(KF6IdleTime PRIVATE
     kidletime.cpp
-    abstractsystempoller.cpp
+    kabstractidletimepoller.cpp
     widgetbasedpoller.cpp # TODO it doesn't actually use widgets, just GUI. Rename?
 )
 
@@ -54,7 +54,7 @@ install(FILES
 
 install(
     FILES
-        abstractsystempoller.h
+        kabstractidletimepoller_p.h
     DESTINATION
         ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime/private
     COMPONENT

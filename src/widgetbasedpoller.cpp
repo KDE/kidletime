@@ -11,7 +11,7 @@
 #include <QWindow>
 
 WidgetBasedPoller::WidgetBasedPoller(QObject *parent)
-    : AbstractSystemPoller(parent)
+    : KAbstractIdleTimePoller(parent)
 {
 }
 

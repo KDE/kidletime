@@ -7,7 +7,7 @@
 #ifndef XSYNCBASEDPOLLER_H
 #define XSYNCBASEDPOLLER_H
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 #include <QHash>
 
 #include <config-kidletime.h>
@@ -18,11 +18,11 @@
 
 #include "fixx11h.h"
 
-class XSyncBasedPoller : public AbstractSystemPoller
+class XSyncBasedPoller : public KAbstractIdleTimePoller
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "xcb.json")
-    Q_INTERFACES(AbstractSystemPoller)
+    Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "xcb.json")
+    Q_INTERFACES(KAbstractIdleTimePoller)
 
 public:
     static XSyncBasedPoller *instance();

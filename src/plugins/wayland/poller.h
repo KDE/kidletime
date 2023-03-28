@@ -5,7 +5,7 @@
 */
 #pragma once
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 
 #include <QHash>
 #include <memory>
@@ -15,11 +15,11 @@ class IdleManagerExt;
 
 class IdleTimeout;
 
-class Poller : public AbstractSystemPoller
+class Poller : public KAbstractIdleTimePoller
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "wayland.json")
-    Q_INTERFACES(AbstractSystemPoller)
+    Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "wayland.json")
+    Q_INTERFACES(KAbstractIdleTimePoller)
 
 public:
     explicit Poller(QObject *parent = nullptr);

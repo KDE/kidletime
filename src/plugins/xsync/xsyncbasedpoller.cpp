@@ -53,7 +53,7 @@ XSyncBasedPoller *XSyncBasedPoller::instance()
 }
 
 XSyncBasedPoller::XSyncBasedPoller(QObject *parent)
-    : AbstractSystemPoller(parent)
+    : KAbstractIdleTimePoller(parent)
     , m_display(qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display())
     , m_xcb_connection(nullptr)
     , m_sync_event(0)

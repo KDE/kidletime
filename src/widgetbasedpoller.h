@@ -9,13 +9,13 @@
 
 #include <kidletime_export.h>
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 
 class QTimer;
 class QEvent;
 class QWindow;
 
-class KIDLETIME_EXPORT WidgetBasedPoller : public AbstractSystemPoller
+class KIDLETIME_EXPORT WidgetBasedPoller : public KAbstractIdleTimePoller
 {
     Q_OBJECT
 

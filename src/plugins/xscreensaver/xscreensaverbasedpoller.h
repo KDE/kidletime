@@ -14,8 +14,8 @@
 class XScreensaverBasedPoller : public WidgetBasedPoller
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.kidletime.AbstractSystemPoller" FILE "xcb.json")
-    Q_INTERFACES(AbstractSystemPoller)
+    Q_PLUGIN_METADATA(IID KAbstractIdleTimePoller_iid FILE "xcb.json")
+    Q_INTERFACES(KAbstractIdleTimePoller)
 
 public:
     explicit XScreensaverBasedPoller(QObject *parent = nullptr);

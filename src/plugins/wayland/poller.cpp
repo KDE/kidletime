@@ -119,7 +119,7 @@ public:
 };
 
 Poller::Poller(QObject *parent)
-    : AbstractSystemPoller(parent)
+    : KAbstractIdleTimePoller(parent)
     , m_idleManagerKwin(new IdleManagerKwin)
     , m_idleManagerExt(new IdleManagerExt)
 {

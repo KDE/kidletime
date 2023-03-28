@@ -8,7 +8,7 @@
 
 #include <config-kidletime.h>
 
-#include "abstractsystempoller.h"
+#include "kabstractidletimepoller_p.h"
 #include "logging.h"
 
 #include <QDir>
@@ -62,7 +62,7 @@ public:
     void resumingFromIdle();
     void timeoutReached(int msec);
 
-    QPointer<AbstractSystemPoller> poller;
+    QPointer<KAbstractIdleTimePoller> poller;
     bool catchResume;
 
     int currentId;
@@ -81,10 +81,10 @@ KIdleTime::KIdleTime()
     Q_D(KIdleTime);
     d->loadSystem();
 
-    connect(d->poller.data(), &AbstractSystemPoller::resumingFromIdle, this, [d]() {
+    connect(d->poller.data(), &KAbstractIdleTimePoller::resumingFromIdle, this, [d]() {
         d->resumingFromIdle();
     });
-    connect(d->poller.data(), &AbstractSystemPoller::timeoutReached, this, [d](int msec) {
+    connect(d->poller.data(), &KAbstractIdleTimePoller::timeoutReached, this, [d](int msec) {
         d->timeoutReached(msec);
     });
 }
@@ -204,18 +204,18 @@ static bool checkPlatform(const QJsonObject &metadata, const QString &platformNa
     });
 }
 
-static AbstractSystemPoller *loadPoller()
+static KAbstractIdleTimePoller *loadPoller()
 {
     const QString platformName = QGuiApplication::platformName();
 
     const QVector<QStaticPlugin> staticPlugins = QPluginLoader::staticPlugins();
     for (const QStaticPlugin &staticPlugin : staticPlugins) {
         const QJsonObject metadata = staticPlugin.metaData();
-        if (metadata.value(QLatin1String("IID")) != QLatin1String(AbstractSystemPoller_iid)) {
+        if (metadata.value(QLatin1String("IID")) != QLatin1String(KAbstractIdleTimePoller_iid)) {
             continue;
         }
         if (checkPlatform(metadata, platformName)) {
-            AbstractSystemPoller *poller = qobject_cast<AbstractSystemPoller *>(staticPlugin.instance());
+            auto *poller = qobject_cast<KAbstractIdleTimePoller *>(staticPlugin.instance());
             if (poller) {
                 if (poller->isAvailable()) {
                     qCDebug(KIDLETIME) << "Loaded system poller from a static plugin";
@@ -233,7 +233,7 @@ static AbstractSystemPoller *loadPoller()
         }
         QPluginLoader loader(candidate);
         if (checkPlatform(loader.metaData(), platformName)) {
-            AbstractSystemPoller *poller = qobject_cast<AbstractSystemPoller *>(loader.instance());
+            auto *poller = qobject_cast<KAbstractIdleTimePoller *>(loader.instance());
             if (poller) {
                 qCDebug(KIDLETIME) << "Trying plugin" << candidate;
                 if (poller->isAvailable()) {

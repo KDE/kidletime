@@ -4,22 +4,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#ifndef ABSTRACTSYSTEMPOLLER_H
-#define ABSTRACTSYSTEMPOLLER_H
+#ifndef KABSTRACTIDLETIMEPOLLER_P_H
+#define KABSTRACTIDLETIMEPOLLER_P_H
 
 #include <kidletime_export.h>
 
 #include <QObject>
 
-#define AbstractSystemPoller_iid "org.kde.kidletime.AbstractSystemPoller"
+#define KAbstractIdleTimePoller_iid "org.kde.kidletime.KAbstractIdleTimePoller"
 
-class KIDLETIME_EXPORT AbstractSystemPoller : public QObject
+class KIDLETIME_EXPORT KAbstractIdleTimePoller : public QObject
 {
     Q_OBJECT
 
 public:
-    AbstractSystemPoller(QObject *parent = nullptr);
-    ~AbstractSystemPoller() override;
+    KAbstractIdleTimePoller(QObject *parent = nullptr);
+    ~KAbstractIdleTimePoller() override;
 
     virtual bool isAvailable() = 0;
     virtual bool setUpPoller() = 0;
@@ -42,6 +42,6 @@ Q_SIGNALS:
     void timeoutReached(int msec);
 };
 
-Q_DECLARE_INTERFACE(AbstractSystemPoller, AbstractSystemPoller_iid)
+Q_DECLARE_INTERFACE(KAbstractIdleTimePoller, KAbstractIdleTimePoller_iid)
 
-#endif /* ABSTRACTSYSTEMPOLLER_H */
+#endif /* KABSTRACTIDLETIMEPOLLER_P_H */
