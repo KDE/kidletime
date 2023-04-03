@@ -3,6 +3,12 @@ configure_file(config-kidletime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kidle
 add_library(KF6IdleTime)
 add_library(KF6::IdleTime ALIAS KF6IdleTime)
 
+set_target_properties(KF6IdleTime PROPERTIES
+    VERSION     ${KIDLETIME_VERSION}
+    SOVERSION   ${KIDLETIME_SOVERSION}
+    EXPORT_NAME IdleTime
+)
+
 target_sources(KF6IdleTime PRIVATE
     kidletime.cpp
     kabstractidletimepoller.cpp
@@ -26,15 +32,11 @@ ecm_generate_export_header(KF6IdleTime
     DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
+
 target_include_directories(KF6IdleTime INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime>")
 
 target_link_libraries(KF6IdleTime PUBLIC Qt6::Core)
 target_link_libraries(KF6IdleTime PRIVATE Qt6::Gui)
-
-set_target_properties(KF6IdleTime PROPERTIES  VERSION ${KIDLETIME_VERSION}
-                                              SOVERSION ${KIDLETIME_SOVERSION}
-                                              EXPORT_NAME IdleTime
-)
 
 add_subdirectory(plugins)
 
