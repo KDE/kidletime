@@ -25,8 +25,9 @@ include(ECMGenerateHeaders)
 include(ECMDeprecationSettings)
 include(ECMAddQch)
 
+set(kiconthemes_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kidletime_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h"
+                        VERSION_HEADER "${kiconthemes_version_header}"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfigVersion.cmake"
                         SOVERSION 6)
 
@@ -123,7 +124,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfig.cmake"
 
 install(EXPORT KF6IdleTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6IdleTimeTargets.cmake NAMESPACE KF6:: )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h
+install(FILES ${kiconthemes_version_header}
         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime COMPONENT Devel)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
