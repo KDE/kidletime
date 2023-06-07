@@ -9,7 +9,7 @@
 #include <QGuiApplication>
 #include <QLoggingCategory>
 #include <QWaylandClientExtensionTemplate>
-#include <QtWaylandClient/QtWaylandClientVersion>
+#include <QtWaylandClientVersion>
 
 #include <qpa/qplatformnativeinterface.h>
 
