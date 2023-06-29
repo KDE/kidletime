@@ -60,3 +60,5 @@ void KIdleTest::timeoutReached(int id, int timeout)
     }
 }
 //@@snippet_end
+
+#include "moc_KIdleTest.cpp"

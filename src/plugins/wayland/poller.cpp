@@ -215,4 +215,5 @@ IdleTimeout* Poller::createTimeout(int timeout)
     return nullptr;
 }
 
+#include "moc_poller.cpp"
 #include "poller.moc"

@@ -10,6 +10,10 @@
 
 #include <QGuiApplication>
 
+// sourcing the moc file before the Xlib include,
+// whose defines like "Bool" break Qt names
+#include "moc_xscreensaverbasedpoller.cpp"
+
 #include <X11/Xlib.h>
 #include <X11/extensions/scrnsaver.h>
 

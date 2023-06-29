@@ -14,3 +14,5 @@ KAbstractIdleTimePoller::KAbstractIdleTimePoller(QObject *parent)
 KAbstractIdleTimePoller::~KAbstractIdleTimePoller()
 {
 }
+
+#include "moc_kabstractidletimepoller_p.cpp"

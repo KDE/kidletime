@@ -143,3 +143,5 @@ void KWindowBasedIdleTimePoller::stopCatchingIdleEvents()
 {
     releaseInputLock();
 }
+
+#include "moc_kwindowbasedidletimepoller_p.cpp"
