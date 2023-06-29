@@ -75,3 +75,5 @@ void WindowsPoller::checkForIdle()
         Q_EMIT resumingFromIdle();
     }
 }
+
+#include "moc_windowspoller.cpp"

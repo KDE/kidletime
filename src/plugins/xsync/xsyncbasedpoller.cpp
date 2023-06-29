@@ -346,3 +346,5 @@ void XSyncBasedPoller::simulateUserActivity()
     XResetScreenSaver(m_display);
     XFlush(m_display);
 }
+
+#include "moc_xsyncbasedpoller.cpp"

@@ -14,3 +14,5 @@ AbstractSystemPoller::AbstractSystemPoller(QObject *parent)
 AbstractSystemPoller::~AbstractSystemPoller()
 {
 }
+
+#include "moc_abstractsystempoller.cpp"
