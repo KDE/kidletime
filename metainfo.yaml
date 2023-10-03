@@ -11,8 +11,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - qmake: KIdleTime
-   cmake: "KF6::IdleTime"
+ - cmake: "KF6::IdleTime"
 cmakename: KF6IdleTime
 
 public_lib: true
