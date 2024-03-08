@@ -118,6 +118,10 @@ void KIdleTime::stopCatchingResumeEvent()
 int KIdleTime::addIdleTimeout(int msec)
 {
     Q_D(KIdleTime);
+    if (Q_UNLIKELY(msec < 0)) {
+        qCWarning(KIDLETIME, "KIdleTime::addIdleTimeout: invalid timeout: %d", msec);
+        return 0;
+    }
     if (Q_UNLIKELY(!d->poller)) {
         return 0;
     }
