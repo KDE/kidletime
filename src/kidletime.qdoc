@@ -1,0 +1,9 @@
+/*!
+    \module KIdleTime
+    \title KIdleTime C++ Classes
+    \qtcmakepackage IdleTime
+
+    \brief Provides core non-GUI functionality.
+
+    Stuff
+*/

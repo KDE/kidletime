@@ -24,6 +24,7 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMDeprecationSettings)
 include(ECMAddQch)
+include(ECMGenerateQDoc)
 
 set(kiconthemes_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kidletime_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
