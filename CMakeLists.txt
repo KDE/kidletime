@@ -23,7 +23,7 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMDeprecationSettings)
-include(ECMAddQch)
+include(ECMGenerateQDoc)
 
 set(kiconthemes_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kidletime_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
@@ -94,9 +94,6 @@ endif()
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
-
 ecm_set_disabled_deprecation_versions(
     QT 6.9.0
 )
@@ -107,16 +104,6 @@ add_subdirectory(examples)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6IdleTime")
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF6IdleTime_QCH
-        FILE KF6IdleTimeQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6IdleTimeQchTargets.cmake\")")
-endif()
 
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6IdleTimeConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF6IdleTimeConfig.cmake"

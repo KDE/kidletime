@@ -1,0 +1,16 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KIdleTime
+description = Reporting of idle time of user and system
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+excludedirs += plugins
+
+outputformats = HTML
+
+depends += \
+    qtcore
