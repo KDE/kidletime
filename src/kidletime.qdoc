@@ -1,0 +1,10 @@
+/*!
+    \module KIdleTime
+    \title KIdleTime C++ Classes
+    \cmakepackage KF6
+    \cmakecomponent IdleTime
+
+    \brief Provides core non-GUI functionality.
+
+    Stuff
+*/
