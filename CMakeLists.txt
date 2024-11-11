@@ -37,7 +37,7 @@ find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
 option(WITH_X11 "Build X11 support" ON)
 option(WITH_WAYLAND "BUILD Wayland support" ON)
 
-if(APPLE OR WIN32)
+if(APPLE OR WIN32 OR HAIKU)
     set(WITH_X11 OFF)
     set(WITH_WAYLAND OFF)
 endif()
