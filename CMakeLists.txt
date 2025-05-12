@@ -84,7 +84,7 @@ if(WITH_WAYLAND)
     find_package(Qt6WaylandClient ${REQUIRED_QT_VERSION} REQUIRED CONFIG)
     find_package(Wayland 1.9 REQUIRED Client)
     find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
-    find_package(WaylandProtocols 1.27)
+    find_package(WaylandProtocols 1.40)
     set_package_properties(WaylandProtocols PROPERTIES
         TYPE REQUIRED
         PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"

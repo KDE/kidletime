@@ -104,7 +104,7 @@ class IdleManagerExt : public QWaylandClientExtensionTemplate<IdleManagerExt>, p
 {
 public:
     IdleManagerExt()
-        : QWaylandClientExtensionTemplate<IdleManagerExt>(1)
+        : QWaylandClientExtensionTemplate<IdleManagerExt>(2)
     {
         initialize();
     }
@@ -206,7 +206,11 @@ IdleTimeout* Poller::createTimeout(int timeout)
     }
 
     if (m_idleManagerExt->isActive()) {
-        return new IdleTimeoutExt(m_idleManagerExt->get_idle_notification(timeout, seat));
+        if (static_cast<QWaylandClientExtension *>(m_idleManagerExt.get())->version() >= EXT_IDLE_NOTIFIER_V1_GET_INPUT_IDLE_NOTIFICATION_SINCE_VERSION) {
+            return new IdleTimeoutExt(m_idleManagerExt->get_input_idle_notification(timeout, seat));
+        } else {
+            return new IdleTimeoutExt(m_idleManagerExt->get_idle_notification(timeout, seat));
+        }
     }
     if (m_idleManagerKwin->isActive()) {
         return new IdleTimeoutKwin(m_idleManagerKwin->get_idle_timeout(seat, timeout));
