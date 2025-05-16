@@ -12,5 +12,7 @@ excludedirs += plugins
 
 outputformats = HTML
 
+navigation.landingpage = "KIdleTime"
+
 depends += \
     qtcore
