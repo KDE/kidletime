@@ -16,3 +16,17 @@ navigation.landingpage = "KIdleTime"
 
 depends += \
     qtcore
+
+qhp.projects            = KIdleTime
+
+qhp.KIdleTime.file                = kidletime.qhp
+qhp.KIdleTime.namespace           = org.kde.kidletime.$QT_VERSION_TAG
+qhp.KIdleTime.virtualFolder       = kidletime
+qhp.KIdleTime.indexTitle          = KIdleTime
+qhp.KIdleTime.indexRoot           =
+
+qhp.KIdleTime.subprojects         = classes
+qhp.KIdleTime.subprojects.classes.title = C++ Classes
+qhp.KIdleTime.subprojects.classes.indexTitle = KIdleTime C++ Classes
+qhp.KIdleTime.subprojects.classes.selectors = class fake:headerfile
+qhp.KIdleTime.subprojects.classes.sortPages = true
