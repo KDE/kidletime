@@ -30,3 +30,5 @@ qhp.KIdleTime.subprojects.classes.title = C++ Classes
 qhp.KIdleTime.subprojects.classes.indexTitle = KIdleTime C++ Classes
 qhp.KIdleTime.subprojects.classes.selectors = class fake:headerfile
 qhp.KIdleTime.subprojects.classes.sortPages = true
+
+tagfile = kidletime.tags
