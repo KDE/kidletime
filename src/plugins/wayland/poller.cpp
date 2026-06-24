@@ -15,7 +15,7 @@
 #include "qwayland-idle.h"
 
 Q_DECLARE_LOGGING_CATEGORY(POLLER)
-Q_LOGGING_CATEGORY(POLLER, "kf5idletime_wayland")
+Q_LOGGING_CATEGORY(POLLER, "kf.idletime.wayland")
 
 /*
  * Porting notes:
