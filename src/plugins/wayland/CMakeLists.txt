@@ -21,3 +21,12 @@ install(
     DESTINATION
         ${KDE_INSTALL_PLUGINDIR}/kf6/org.kde.kidletime.platforms/
 )
+
+ecm_qt_declare_logging_category(KF6IdleTimeWaylandPlugin
+    HEADER wayland_logging.h
+    IDENTIFIER KIDLETIME_WAYLAND_PLUGIN
+    CATEGORY_NAME kf.idletime.wayland
+    OLD_CATEGORY_NAMES kf5idletime_wayland
+    DESCRIPTION "KIdleTime Wayland plugin"
+    EXPORT KIDLETIME
+)

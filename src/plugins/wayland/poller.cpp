@@ -14,8 +14,7 @@
 #include "qwayland-ext-idle-notify-v1.h"
 #include "qwayland-idle.h"
 
-Q_DECLARE_LOGGING_CATEGORY(POLLER)
-Q_LOGGING_CATEGORY(POLLER, "kf.idletime.wayland")
+#include "wayland_logging.h"
 
 /*
  * Porting notes:
@@ -185,7 +184,7 @@ void Poller::stopCatchingIdleEvents()
 
 int Poller::forcePollRequest()
 {
-    qCWarning(POLLER) << "This plugin does not support polling idle time";
+    qCWarning(KIDLETIME_WAYLAND_PLUGIN) << "This plugin does not support polling idle time";
     return 0;
 }
 
