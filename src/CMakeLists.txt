@@ -41,7 +41,7 @@ target_link_libraries(KF6IdleTime PRIVATE Qt6::Gui)
 
 add_subdirectory(plugins)
 
-ecm_generate_headers(KIdleTime_HEADERS
+ecm_generate_headers(KIdleTime_CamelCase_HEADERS
   HEADER_NAMES
   KIdleTime
 
@@ -52,6 +52,7 @@ ecm_generate_headers(KIdleTime_HEADERS
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kidletime_export.h
   ${KIdleTime_HEADERS}
+  ${KIdleTime_CamelCase_HEADERS}
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime COMPONENT Devel
 )
 
@@ -74,3 +75,21 @@ ecm_qt_install_logging_categories(
 )
 
 ecm_generate_qdoc(KF6IdleTime kidletime.qdocconf)
+
+ecm_add_installed_library_check(KF6IdleTime
+    PACKAGE_NAME "KF6IdleTime"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+)
+
+ecm_installed_library_check_include_strings(KF6IdleTime
+    HEADERS ${KIdleTime_CamelCase_HEADERS}
+)
+
+ecm_installed_library_check_include_strings(KF6IdleTime
+    HEADERS kabstractidletimepoller_p.h
+    PREFIX private
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6IdleTime
+    PREFIX KIDLETIME
+)
