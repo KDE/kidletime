@@ -41,7 +41,6 @@ public Q_SLOTS:
     void simulateUserActivity() override;
 
 private:
-    bool initWayland();
     IdleTimeout* createTimeout(int timeout);
 
     QScopedPointer<IdleManagerKwin> m_idleManagerKwin;
